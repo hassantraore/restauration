@@ -170,7 +170,10 @@ function setQuantity(items, totalArticle, totalPrice) {
 
 function replaceCartElements(totalArticle, totalPrice) {
     if (totalArticle) {
-        document.getElementById("cart").innerText = totalArticle;
+        if (document.getElementById("cart")) {
+            document.getElementById("cart").innerText = totalArticle;
+        }
+
         if (document.getElementById("cart_total_items")) {
             document.getElementById("cart_total_items").innerText =
                 totalArticle + " items";
@@ -180,7 +183,10 @@ function replaceCartElements(totalArticle, totalPrice) {
                 totalPrice + " Dhs";
         }
     } else {
-        document.getElementById("cart").innerText = "";
+        if (document.getElementById("cart")) {
+            document.getElementById("cart").innerText = "";
+        }
+
         if (document.getElementById("cart_total_items")) {
             document.getElementById("cart_total_items").innerText = "0 items";
         }

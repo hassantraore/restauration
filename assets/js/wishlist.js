@@ -76,11 +76,17 @@ function replaceWishListElement(items, totalWish) {
 
 function setTotalWish(totalWish) {
     if (totalWish) {
-        document.getElementById("wish").innerText = totalWish;
+        if (document.getElementById("wish")) {
+            document.getElementById("wish").innerText = totalWish;
+        }
+
         $("#wishlist-empty").hide();
         $("#table-wishlist").show();
     } else {
-        document.getElementById("wish").innerText = "";
+        if (document.getElementById("wish")) {
+            document.getElementById("wish").innerText = "";
+        }
+
         $("#wishlist-empty").show();
         $("#table-wishlist").hide();
     }
