@@ -38,11 +38,11 @@
     app.request.attributes.get('_route_params')) %}
     <body
         class="js-body"
-        data-items="{{ app.session.get('panier') |json_encode() }}"
-        data-total-article="{{app.session.get('totalArticle') |json_encode()}}"
-        data-total-price="{{app.session.get('totalPrice') |json_encode()}}"
-        data-wish-items="{{app.session.get('wish') |json_encode()}}"
-        data-total-wish="{{app.session.get('totalWish') |json_encode()}}"
+        data-cart-items="{{ app.session.get('panier') |json_encode() }}"
+        data-total-article="{{ app.session.get('totalArticle') }}"
+        data-total-price="{{ app.session.get('totalPrice') }}"
+        data-wish-items="{{app.session.get('wishlist') |json_encode()}}"
+        data-total-wish="{{ app.session.get('totalWish') }}"
     >
         {% block body %}
         <div class="sub_page">{% include "layouts/nav/navbar.html.twig" %}</div>
