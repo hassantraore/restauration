@@ -1,19 +1,54 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+        <link
+            rel="icon"
+            href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>"
+        />
+        {# Run `composer require symfony/webpack-encore-bundle` to start using
+        Symfony UX #} {% block stylesheets %}
+        {{
+            encore_entry_link_tags("app")
+        }}
+        {% endblock %} {% block javascripts %}
+        {{
+            encore_entry_script_tags("app")
+        }}
+        <script>
+            /** google_map js **/
+            function myMap() {
+                var mapProp = {
+                    center: new google.maps.LatLng(40.712775, -74.005973),
+                    zoom: 18,
+                };
+                var map = new google.maps.Map(
+                    document.getElementById("googleMap"),
+                    mapProp
+                );
+            }
+        </script>
+        <!-- Google Map -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+        <!-- End Google Map -->
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    {% set currentPath = path(app.request.get('_route'),
+    app.request.attributes.get('_route_params')) %}
+    <body
+        class="js-body"
+        data-items="{{ app.session.get('panier') |json_encode() }}"
+        data-total-article="{{app.session.get('totalArticle') |json_encode()}}"
+        data-total-price="{{app.session.get('totalPrice') |json_encode()}}"
+        data-wish-items="{{app.session.get('wish') |json_encode()}}"
+        data-total-wish="{{app.session.get('totalWish') |json_encode()}}"
+    >
+        {% block body %}
+        <div class="sub_page">{% include "layouts/nav/navbar.html.twig" %}</div>
+
+        <main>{% block main %} {% endblock main %}</main>
+        {% endblock %} {% if (currentPath starts with '/admin/') == false %} {%
+        include "layouts/footer.html.twig" %} {% endif %}
     </body>
 </html>

@@ -1,4 +1,7 @@
-<div style="background-color: #222831; height: 100px">
+<div class="hero_area">
+    <div class="bg-box">
+        <img src="{{ asset('build/images/hero-bg.jpg') }}" alt="" />
+    </div>
     {% include "/layouts/nav/navlinks.html.twig" %}
 </div>
 {% set link = set_active_route(path('app_cart')) %}
