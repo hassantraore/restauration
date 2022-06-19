@@ -1,0 +1,31 @@
+body {
+  background-color: lightgray;
+}
+
+.table th,
+.table td {
+  vertical-align: middle !important;
+}
+
+.custom-file-label {
+  color: var(--dark-3) !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+@import "./style.scss";
+@import "./wishlist.scss";
+@import "./checkout.scss";
+@import "./payment.scss";
+@import "./cart.scss";
+@import "./plat.scss";
+@import "./modal.scss";
+@import "./responsive.css";
+@import "./register.scss";
+@import "./account.scss";
+@import "./dashboard.css";
+@import "~bootstrap/scss/bootstrap";
+@import "~@fortawesome/fontawesome-free/css/all.css";
+@import "~jquery-nice-select/css/nice-select.css";
+@import "~owl.carousel/dist/assets/owl.carousel.css";

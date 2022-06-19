@@ -1,0 +1,33 @@
+.checkout{
+    .selected{
+        border: solid 2px;
+        border-radius: 12px;
+        background-color: #ffbe33;
+        border-color: black;
+    }
+    .livraison {
+        padding: 20px;
+        width: 340px;
+        .icon.not-selected {
+            padding: 17px;
+            border: solid 1px;
+            background: white;
+            border-radius: 100%;
+            border-color: gray;
+        }
+            
+        .icon.selected{
+            padding: 17px;
+            background: white;
+            border-radius: 100%;
+        }   
+    }
+    .not-selected {
+        border: solid 2px;
+        border-radius: 12px;
+        border-color: black;
+    }
+    .addresse{
+        height: 110px;
+    }
+}

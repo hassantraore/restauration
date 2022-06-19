@@ -1,0 +1,26 @@
+<div class="text-dark mb-5">
+    <h3 class="mb-4">Sauce</h3>
+    <span style="font-size: 14px" class="text-muted">
+        <em>Choisissez une sauce</em></span
+    >
+
+    {% for prod in product.sauce %}
+    <div class="d-flex justify-content-between">
+        <div class="mt-2 form-check">
+            <input
+                class="form-check-input"
+                type="radio"
+                name="sauce"
+                id="sauce-{{ loop.index }}"
+                value="{{ prod.name }}"
+            />
+            <label
+                class="form-check-label pointer"
+                for="sauce-{{ loop.index }}"
+            >
+                {{ prod.name }}
+            </label>
+        </div>
+    </div>
+    {% endfor %}
+</div>

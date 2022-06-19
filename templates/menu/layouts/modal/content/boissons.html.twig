@@ -1,0 +1,53 @@
+<div class="row mb-4">
+    <div class="col-md-12">
+        <h3 class="mb-4">Boissons</h3>
+        <div class="owl-carousel owl-theme text-dark">
+            {% for row in boissons %}
+
+            <div class="item col-md-12">
+                <img src="{{ vich_uploader_asset(row) }}" alt="" class="" />
+                <div class="text-center">
+                    <h6>{{ row.name }}</h6>
+                    <span>{{ row.price }} Dhs</span>
+                </div>
+
+                <div
+                    class="d-flex mb-4 mt-4 mr-auto ml-auto justify-content-between"
+                    style="width: 150px; align-items: center"
+                >
+                    <div class="">
+                        <a
+                            class="pr-3 pl-3 mr-2 text-danger text-decoration-none pointer"
+                            onclick="removeProductFromCart(0,{{
+                                row.id
+                            }}, 'boisson')"
+                            style="height: 40px"
+                        >
+                            <i class="fa fa-minus"></i>
+                        </a>
+                    </div>
+
+                    <div>
+                        <span
+                            id="boisson_{{ row.id }}_quantity"
+                            class="cart cart_boisson"
+                            >0</span
+                        >
+                    </div>
+                    <div class="">
+                        <a
+                            class="pr-3 pl-3 ml-2 text-danger text-decoration-none pointer"
+                            onclick="addProductToCart(0,{{ row.id }}, {{
+                                row.price
+                            }}, 'boisson')"
+                            style="height: 40px"
+                        >
+                            <i class="fa fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

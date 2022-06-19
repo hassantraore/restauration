@@ -1,0 +1,8 @@
+<ul class="filters_menu">
+    <li class="active" data-filter="*">All</li>
+    {% for category in categories %}
+    <li data-filter=".{{ category.name }}">{{ category.name }}</li>
+    {% endfor %} {#
+    <li data-filter=".fries">Fries</li>
+    #}
+</ul>

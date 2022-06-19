@@ -1,0 +1,67 @@
+<div class="text-dark mb-4">
+    {% for size in product.size %}
+    <div class="row pb-1" style="align-items: center">
+        <div class="col-md-3">
+            <span>{{ size.sizeName }}</span>
+        </div>
+        <div class="text-muted col-md-3" style="font-size: 14px">
+            <em>{{ size.newPrice ? size.newPrice : product.price }} Dhs</em>
+            <strike><em>50 Dhs</em></strike>
+        </div>
+        <div class="text-muted col-md-3" style="font-size: 14px">
+            {% if product.sauce %} {#
+            <label for="{{ product.id }}_sauce_{{ size.sizeName }}"
+                >Sauce :
+            </label>
+            #}
+            <select
+                name="sauce"
+                id="{{ product.id }}_sauce_{{ size.sizeName }}"
+                style="outline: none; border: none; background: transparent"
+            >
+                {% for row in product.sauce %}
+                <option value="{{ row.name }}">{{ row.name }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+        </div>
+        <div class="col-md-3">
+            <div
+                class="d-flex mr-auto ml-auto justify-content-between"
+                style="width: 150px; align-items: center"
+            >
+                <div class="">
+                    <a
+                        class="pr-3 pl-3 mr-2 text-danger text-decoration-none pointer"
+                        onclick="removeProductFromCart({{ product.id }},'{{
+                            size.sizeName
+                        }}')"
+                        style="height: 40px"
+                    >
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </div>
+
+                <div>
+                    <span
+                        id="{{ product.id }}_plat_{{ size.sizeName }}_quantity"
+                        class="cart cart_plat"
+                        >0</span
+                    >
+                </div>
+                <div class="">
+                    <a
+                        class="pr-3 pl-3 ml-2 text-danger text-decoration-none pointer"
+                        onclick="addProductToCart({{ product.id }},'{{
+                            size.sizeName
+                        }}', {{ size.newPrice }})"
+                        style="height: 40px"
+                    >
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

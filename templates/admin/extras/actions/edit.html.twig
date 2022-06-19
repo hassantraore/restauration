@@ -1,0 +1,9 @@
+{% extends './admin/index.html.twig' %} {% block content %} {% set title =
+'Éditer le supplément #' ~ extra.id %}
+{{
+    include("admin/extras/actions/_form.html.twig", {
+        button_label: "Update"
+    })
+}}
+
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "/account/index.html.twig" %} {% block content %}
+{{
+    include("account/address/actions/_form.html.twig", {
+        button_label: "Update"
+    })
+}}
+{% endblock %}

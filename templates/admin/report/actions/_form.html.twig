@@ -1,0 +1,360 @@
+{# {{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #} {% include "./admin/layouts/header/report.html.twig" %}
+<section class="signin-area signin-one">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="mb-5">
+                    <h1 class="text-center">
+                        {{ title }}
+                    </h1>
+                </div>
+                {{
+                    form_start(form, {
+                        attr: {
+                            novalidate: "novalidate",
+                            id: "productForm"
+                        }
+                    })
+                }}
+                <div class="signin-form form-style-two rounded-buttons">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if form_errors(form.year) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.year) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Année</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.year, {
+                                            attr: {
+                                                placeholder: ""
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.month) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.month) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Mois</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.month, {
+                                            attr: {
+                                                placeholder: "Month"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+
+                        {#
+                        <div class="col-md-12">
+                            {% if form_errors(form.newPrice) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.newPrice) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer le nouveau prix</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.newPrice, {
+                                            attr: {
+                                                placeholder: "Prix"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.oldPrice) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.oldPrice) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer l' prix</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.oldPrice, {
+                                            attr: {
+                                                placeholder: "Prix"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        #}
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter une charge d'exploitation</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="exploitation_charge"
+                                        data-index="{{ form.exploitation_charge|length > 0 ? form.exploitation_charge|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.exploitation_charge.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.exploitation_charge|length >
+                                        0%} {% for exploitation_charge in
+                                        form.exploitation_charge %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(
+                                                    exploitation_charge.label
+                                                )
+                                            }}
+                                            {{
+                                                form_row(
+                                                    exploitation_charge.mount
+                                                )
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="exploitation_charge"
+                                    >
+                                        Add an exploitation charge
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter un produit financier</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="financial_product"
+                                        data-index="{{ form.financial_product|length > 0 ? form.financial_product|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.financial_product.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.financial_product|length >
+                                        0%} {% for financial_product in
+                                        form.financial_product %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(
+                                                    financial_product.label
+                                                )
+                                            }}
+                                            {{
+                                                form_row(
+                                                    financial_product.mount
+                                                )
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="financial_product"
+                                    >
+                                        Add a financial product
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter une charge financiere</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="financial_charge"
+                                        data-index="{{ form.financial_charge|length > 0 ? form.financial_charge|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.financial_charge.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.financial_charge|length > 0%}
+                                        {% for financial_charge in
+                                        form.financial_charge %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(financial_charge.label)
+                                            }}
+                                            {{
+                                                form_row(financial_charge.mount)
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="financial_charge"
+                                    >
+                                        Add a financial charge
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter un produit non courant</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="no_current_product"
+                                        data-index="{{ form.no_current_product|length > 0 ? form.no_current_product|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.no_current_product.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.no_current_product|length >
+                                        0%} {% for no_current_product in
+                                        form.no_current_product %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(
+                                                    no_current_product.label
+                                                )
+                                            }}
+                                            {{
+                                                form_row(
+                                                    no_current_product.mount
+                                                )
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="no_current_product"
+                                    >
+                                        Add a no current product
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter une charge non courante</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="no_current_charge"
+                                        data-index="{{ form.no_current_charge|length > 0 ? form.no_current_charge|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.no_current_charge.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.no_current_charge|length >
+                                        0%} {% for no_current_charge in
+                                        form.no_current_charge %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(
+                                                    no_current_charge.label
+                                                )
+                                            }}
+                                            {{
+                                                form_row(
+                                                    no_current_charge.mount
+                                                )
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="no_current_charge"
+                                    >
+                                        Add no current charge
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.impot) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.impot) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Ajouter le montant de l'impot</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.impot, {
+                                            attr: {
+                                                placeholder: "Impot"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input rounded-buttons">
+                                <button
+                                    class="btn btn-lg btn-block"
+                                    style="background-color: #ffbe33"
+                                    type="submit"
+                                >
+                                    {{ button_label|default('Enregistrer') }}
+                                </button>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                    </div>
+                </div>
+                <!-- signin form -->
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+    <!-- container -->
+</section>
+<!--====== SIGNIN ONE PART ENDS ======-->

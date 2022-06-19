@@ -1,0 +1,203 @@
+<!-- header section strats -->
+{% set totalArticle = app.session.get('totalArticle') %} {% set totalWish =
+app.session.get('totalWish') %}
+<header class="header_section">
+    <div class="container">
+        <nav
+            class="navbar navbar-expand-lg custom_nav-container align-items-center"
+        >
+            <a class="navbar-brand" href="/home">
+                <span> Af délices </span>
+            </a>
+
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class=""> </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li
+                        class="nav-item {{
+                            set_active_route(path('app_home'))
+                        }}"
+                    >
+                        <a class="nav-link" href="{{ path('app_home') }}"
+                            >Home <span class="sr-only">(current)</span></a
+                        >
+                    </li>
+                    <li
+                        class="nav-item {{
+                            set_active_route(path('app_menu'))
+                        }}"
+                    >
+                        <a class="nav-link" href="{{ path('app_menu') }}"
+                            >Menu</a
+                        >
+                    </li>
+                    {#
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Gallery</a>
+                    </li>
+                    #}
+                    <li
+                        class="nav-item {{
+                            set_active_route(path('app_book'))
+                        }}"
+                    >
+                        <a class="nav-link" href="{{ path('app_book') }}"
+                            >Reservation</a
+                        >
+                    </li>
+                    <li
+                        class="nav-item {{
+                            set_active_route(path('app_about'))
+                        }}"
+                    >
+                        <a class="nav-link" href="{{ path('app_about') }}"
+                            >About</a
+                        >
+                    </li>
+                </ul>
+                <div class="user_option">
+                    <div
+                        class="{{ app.user ? 'mr-5' : '' }}"
+                        style="display: flex; width: 130px"
+                    >
+                        <a
+                            class="user_link text-decoration-none"
+                            style="width: 40%"
+                            href="{{ path('app_cart') }}"
+                        >
+                            <i
+                                class="fas fa-shopping-cart {{
+                                    set_active_route(path('app_cart'))
+                                }}"
+                            ></i>
+                            <span
+                                class="badge badge-pill badge-danger"
+                                id="cart"
+                                style="
+                                    top: -10px;
+                                    left: -6px;
+                                    position: relative;
+                                "
+                                >{% if totalArticle %}{{ totalArticle }}{% endif
+                                %}</span
+                            >
+                        </a>
+                        <!--<form class="form-inline">
+                <button class="btn my-2 my-sm-0 nav_search-btn" type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </form>-->
+                        <a
+                            href="{{ path('app_wishlist') }}"
+                            style="width: 40%"
+                            class="user_link text-decoration-none"
+                        >
+                            <i
+                                class="fa fa-heart {{
+                                    set_active_route(path('app_wishlist'))
+                                }}"
+                            ></i>
+                            <span
+                                class="badge badge-pill badge-danger"
+                                id="wish"
+                                style="
+                                    top: -10px;
+                                    left: -6px;
+                                    position: relative;
+                                "
+                                >{% if totalWish %}{{ totalWish }}{% endif
+                                %}</span
+                            >
+                        </a>
+                        {% if app.user %}
+                        <a
+                            href="{{ path('app_account') }}"
+                            class="user_link"
+                            style="width: 20%"
+                        >
+                            <i
+                                class="fa fa-user {{
+                                    set_active_route(path('app_account'))
+                                }}"
+                                aria-hidden="true"
+                            ></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% if app.user %}
+                    <a
+                        class="btn my-2 my-sm-0 register"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                    >
+                        <i class="fa fa-power-off" aria-hidden="true"></i>
+                        Deconnexion
+                    </a>
+                    <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    Voulez-vous vous déconnecter ?
+                                </div>
+                                <div class="modal-footer">
+                                    <a
+                                        class="btn"
+                                        style="
+                                            background-color: #222831;
+                                            color: white;
+                                            margin: 0px;
+                                        "
+                                        data-dismiss="modal"
+                                    >
+                                        Non
+                                    </a>
+                                    <a
+                                        href="{{ path('app_logout') }}"
+                                        class="btn"
+                                        style="
+                                            background-color: #ffbe33;
+                                            color: white;
+                                        "
+                                    >
+                                        Oui
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <a href="{{ path('app_login') }}" class="order_online mr-2">
+                        Sign In
+                    </a>
+                    <a
+                        href="{{ path('app_register') }}"
+                        class="register"
+                        style="margin: 0px"
+                    >
+                        Register
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- end header section -->

@@ -1,0 +1,105 @@
+<div
+    class="modal fade bd-example-modal-lg"
+    id="wishModal{{ product.item.id }}"
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel{{ product.item.id }}"
+    aria-hidden="true"
+    data-backdrop="static"
+>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <a
+                        class="text-decoration-none text-dark pointer bg-white"
+                        data-dismiss="modal"
+                        style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        "
+                    >
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="main-content p-3">
+                    {% if product.item.size %}
+                    <div class="mb-4">
+                        <h5 class="mb-4" style="font-weight: 900">
+                            Choisissez une taille
+                        </h5>
+                        {% for row in product.item.size %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                            name="{{ product.item.id }}-wish-product-size"
+                            id="{{ product.item.id }}-wish-product-size-{{
+                                row.sizeName
+                            }}" value="{{ row.sizeName }}-{{ row.newPrice }}" {%
+                            if loop.index == 1 %} checked {% endif %} />
+                            <label
+                                class="form-check-label"
+                                for="{{ product.item.id }}-wish-product-size-{{
+                                    row.sizeName
+                                }}"
+                            >
+                                <div class="d-flex">
+                                    <span class="mr-5" style="width: 100px">{{
+                                        row.sizeName
+                                    }}</span>
+                                    <div class="d-flex text-muted">
+                                        <span
+                                            ><em>{{ row.newPrice }} Dhs</em>
+                                        </span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %} {% if product.item.sauce %}
+                    <div class="mb-4">
+                        <h5 class="mb-4" style="font-weight: 900">
+                            Choisissez une sauce
+                        </h5>
+                        {% for row in product.item.sauce %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio"
+                            name="{{ product.item.id }}-wish-product-sauce"
+                            id="{{ product.item.id }}-wish-product-sauce-{{
+                                row.name
+                            }}" value="{{ row.name }}" {% if loop.index == 1 %}
+                            checked {% endif %} />
+                            <label
+                                class="form-check-label"
+                                for="{{ product.item.id }}-wish-product-sauce-{{
+                                    row.name
+                                }}"
+                            >
+                                <div class="d-flex">
+                                    <span>{{ row.name }}</span>
+                                </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <hr />
+                    <button
+                        class="btn btn-block"
+                        data-dismiss="modal"
+                        style="background-color: #ffbe33"
+                        onclick="moveProductToCart({{
+                            product.item.id
+                        }}, null, null)"
+                    >
+                        Ajouter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

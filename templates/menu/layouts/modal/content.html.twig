@@ -1,0 +1,129 @@
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content rounded-0">
+        <div class="modal-body py-0">
+            <div class="d-flex justify-content-end mb-3">
+                <a
+                    class="text-decoration-none text-dark pointer"
+                    data-dismiss="modal"
+                    style="background-color: white"
+                >
+                    <i class="fa fa-times"></i>
+                </a>
+            </div>
+            <div class="main-content p-3">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <img
+                            src="{{ vich_uploader_asset(product) }}"
+                            alt="Image"
+                            class="img-fluid"
+                        />
+                    </div>
+                    <div class="col-md-8">
+                        <h3 class="">
+                            {{ product.name }}
+                        </h3>
+                        <p>{{ product.description }}</p>
+                        <h5 class="text-dark">Ingredients</h5>
+                        <p class="">
+                            {% for row in product.ingredient %}
+                            <span class="badge badge-pill badge-secondary">{{
+                                row.name
+                            }}</span>
+
+                            {% endfor %}
+                        </p>
+                    </div>
+                </div>
+                <br />
+                <div class="content-text mb-4 text-dark" style="padding: 10px">
+                    <!--Size -->
+                    {% include "menu/layouts/modal/content/size.html.twig" %}
+                    <!--extras -->
+                    {# {% if product.extras |length != 0 %} {% include
+                    "menu/layouts/modal/content/extras.html.twig" %} {% endif %}
+
+                    <!-- Boissons-->
+                    {% if product.drink |length != 0 %} {% include
+                    "menu/layouts/modal/content/boissons.html.twig" %}{% endif
+                    %} #}
+
+                    <!-- Sauce -->
+                    {# {% if product.sauce %} {% include
+                    "menu/layouts/modal/content/sauce.html.twig" %} {% endif %}
+                    #} {#
+                    <div class="d-flex justify-content-between">
+                        <div class="mr-auto mt-3">
+                            <!-- Quantity -->
+                            <div class="d-flex mb-4" style="max-width: 100px">
+                                <button
+                                    class="btn btn-primary btn-sm pr-3 pl-3 mr-2 text-white"
+                                    onclick="this.parentNode.querySelector('input[type=integer]').stepDown()"
+                                    style="height: 40px"
+                                >
+                                    <i class="fa fa-minus"></i>
+                                </button>
+
+                                <div class="form-outline">
+                                    <input
+                                        id="form1"
+                                        name="quantity"
+                                        type="integer"
+                                        class="form-control"
+                                    />
+                                    <label class="form-label" for="form1"
+                                        >Quantity</label
+                                    >
+                                </div>
+
+                                <button
+                                    class="btn btn-primary btn-sm pr-3 pl-3 ml-2 text-white"
+                                    onclick="this.parentNode.querySelector('input[type=integer]').stepUp()"
+                                    style="height: 40px"
+                                >
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                            <!-- Quantity -->
+                        </div>
+                        <div class="ml-auto">
+                            <button
+                                data-dismiss="modal"
+                                class="btn btn-primary px-4 text-white"
+                                style="
+                                    background-color: #ffbe33 !important;
+                                    border-color: #ffbe33 !important;
+                                "
+                            >
+                                <span> {{ product.price }}</span> Dhs
+                                <br />
+                                Ajouter au panier
+                            </button>
+                        </div>
+                    </div>
+                    #} {% include
+                    "menu/layouts/modal/content/boissons.html.twig" %}
+                    <!--Extras-->
+                    {% include "menu/layouts/modal/content/extras.html.twig" %}
+                </div>
+                <!-- Boissons-->
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button
+                            data-dismiss="modal"
+                            onclick="location.replace('/cart')"
+                            class="btn text-white btn-block btn-lg"
+                            style="
+                                background-color: #ffbe33 !important;
+                                border-color: #ffbe33 !important;
+                            "
+                        >
+                            Voir le panier <i class="fas fa-cart-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

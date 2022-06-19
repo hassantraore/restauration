@@ -1,0 +1,13 @@
+<div style="background-color: #222831; height: 100px">
+    {% include "/layouts/nav/navlinks.html.twig" %}
+</div>
+{% set link = set_active_route(path('app_cart')) %}
+<div
+    class="flash-message"
+    id="js-flash-message"
+    style="height: 40px; width:350px;{{
+        link == 'active' ? 'background-color: #eee' : ''
+    }}; float:right;"
+>
+    {% include "layouts/flash_message.html.twig" %}
+</div>

@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %} {% block title %}Log in!{% endblock %} {% block
+main %}
+<!--====== SIGNIN ONE PART START ======-->
+<main class="sub_page p-5">
+    <section class="signin-area signin-one">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="mb-5">
+                        <h1 class="text-center">Sign In</h1>
+                    </div>
+                    <form method="post" id="loginForm">
+                        <div class="signin-form form-style-two rounded-buttons">
+                            <div class="row">
+                                {% if error %}
+                                <div class="col-md-12">
+                                    <div class="form-input alert alert-danger">
+                                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="col-md-12">
+                                    <div class="form-input">
+                                        <label
+                                            >Your account will be under this
+                                            email</label
+                                        >
+                                        <div class="input-items default">
+                                            <input
+                                                type="email"
+                                                value="{{ last_username }}"
+                                                name="email"
+                                                id="inputEmail"
+                                                class="form-control"
+                                                autocomplete="email"
+                                                required
+                                                autofocus
+                                            />
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                    </div>
+                                    <!-- form input -->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-input">
+                                        <label>Password for your account</label>
+                                        <div class="input-items default">
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                id="inputPassword"
+                                                class="form-control"
+                                                autocomplete="current-password"
+                                                required
+                                            />
+                                            <i class="fa fa-key"></i>
+                                        </div>
+                                    </div>
+                                    <!-- form input -->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-input rounded-buttons">
+                                        <input
+                                            type="hidden"
+                                            name="_csrf_token"
+                                            value="{{
+                                                csrf_token('authenticate')
+                                            }}"
+                                        />
+                                        <button
+                                            class="btn btn-lg btn-block"
+                                            style="background-color: #ffbe33"
+                                            type="submit"
+                                        >
+                                            Sign In
+                                        </button>
+                                    </div>
+                                    <!-- form input -->
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-input text-center">
+                                        {# Uncomment this section and add a
+                                        remember_me option below your firewall
+                                        to activate remember me functionality.
+                                        See
+                                        https://symfony.com/doc/current/security/remember_me.html
+
+                                        <div class="checkbox mb-3">
+                                            <label>
+                                                <input
+                                                    type="checkbox"
+                                                    name="_remember_me"
+                                                />
+                                                Remember me
+                                            </label>
+                                        </div>
+                                        #}
+                                        <p class="pt-3 text-white">
+                                            have not an account?
+                                            <a
+                                                href="{{
+                                                    path('app_register')
+                                                }}"
+                                                style="color: #ffbe33"
+                                                >register here</a
+                                            >
+                                        </p>
+                                    </div>
+                                    <!-- form input -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- signin form -->
+                    </form>
+                </div>
+            </div>
+            <!-- row -->
+        </div>
+        <!-- container -->
+    </section>
+    <!--====== SIGNIN ONE PART ENDS ======-->
+</main>
+{% endblock %}

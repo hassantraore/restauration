@@ -1,0 +1,20 @@
+<form
+    id="js-drink-delete-form-{{ drink.id }}"
+    method="post"
+    action="{{ path('app_drink_delete', { id: drink.id }) }}"
+>
+    <input
+        type="hidden"
+        name="_token"
+        value="{{ csrf_token('delete' ~ drink.id) }}"
+    />
+    <a
+        class="text-decoration-none btn btn-sm btn-danger"
+        type="submit"
+        onclick="event.preventDefault();confirm('Are you sure you want to delete this item ?') && document.getElementById('js-drink-delete-form-{{
+            drink.id
+        }}').submit()"
+    >
+        <i class="fa fa-trash-alt"></i>
+    </a>
+</form>

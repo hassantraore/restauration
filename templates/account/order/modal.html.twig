@@ -1,0 +1,177 @@
+<div
+    class="modal fade bd-example-modal-lg"
+    id="commandeModal{{ order.id }}"
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="commandeModal{{ order.id }}"
+    aria-hidden="true"
+    data-backdrop="static"
+>
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <a
+                        class="text-decoration-none text-dark pointer bg-white"
+                        data-dismiss="modal"
+                        style="
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 100%;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                        "
+                    >
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="p-3">
+                    <div class="d-flex justify-content-between mb-4">
+                        <h5>Commande No {{ order.id }}</h5>
+                        <h6 class="text-muted">
+                            <em>
+                                Date de creation :
+                                {{
+                                order.createdAt|date('Y-m-d H:i:s')
+                                }}
+                            </em>
+                        </h6>
+                    </div>
+                    <div class="table-responsive mb-4">
+                        <div class="d-flex justify-content-between">
+                            <p>Liste des produits ({{ order.totalArticle }})</p>
+                            <div>
+                                status : <strong>{{ order.status }}</strong>
+                            </div>
+                        </div>
+
+                        <table class="table table-default">
+                            <tr>
+                                <th>Item</th>
+                                <th class="text-center">Prix unitaire</th>
+                                <th class="text-center">Quantité</th>
+                                <th class="text-center">Prix total</th>
+                            </tr>
+                            {% for row in order.items %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-center">
+                                        <div class="" style="width: 25%">
+                                            <img
+                                                src="{{
+                                                    vich_uploader_asset(
+                                                        row.item
+                                                    )| imagine_filter('squared_thumbnail_small')
+                                                }}"
+                                                class="img-fluid rounded-3"
+                                                alt="Cotton T-shirt"
+                                            />
+                                        </div>
+                                        <div class="">
+                                            <div
+                                                class="mb-1"
+                                                style="font-weight: 900"
+                                            >
+                                                {{ row.item.name }}
+                                            </div>
+                                            <div>
+                                                {% if row.size is defined %}
+                                                <span
+                                                    class="badge badge-secondary"
+                                                    >{{ row.size }}</span
+                                                >
+                                                {% endif %} {% if row.sauce is
+                                                defined and row.sauce is not
+                                                null %}
+                                                <span
+                                                    class="badge badge-secondary"
+                                                    >{{ row.sauce }}</span
+                                                >
+
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ row.price }} Dhs</td>
+                                <td class="text-center">{{ row.quantity }}</td>
+                                <td class="text-center">
+                                    {{ row.totalPrice }} Dhs
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4 style="font-weight: 900" class="mb-4">
+                                Livraison
+                            </h4>
+                            <div>
+                                Type de livraison :
+                                <strong>{{
+                                    order.coordinate["livraison_type"]
+                                }}</strong>
+                            </div>
+                            {% if order.coordinate["livraison_type"] ==
+                            "deliver" %}
+                            <div class="">
+                                Addresse de livraison :
+                                <div style="font-weight: 900">
+                                    {{ order.coordinate["addresse"].address }}
+                                </div>
+                                <div class="" style="font-weight: 900">
+                                    {{
+                                        order.coordinate["addresse"].complement
+                                    }}
+                                </div>
+                                <div class="" style="font-weight: 900">
+                                    {{ order.coordinate["addresse"].phone | phone_number_format('NATIONAL')}}
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="">
+                                Nom du destinataire :
+                                <strong>{{
+                                    order.coordinate["identifiant"].nom
+                                }}</strong>
+                            </div>
+                            <div class="">
+                                Téléphone du destinataire :
+                                <strong>{{
+                                    order.coordinate["identifiant"].tel
+                                }}</strong>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <h4 style="font-weight: 900" class="mb-4">
+                                Paiement
+                            </h4>
+                            <div>
+                                Frais de livraison :
+                                <strong>{{ order.shippingCost }} Dhs</strong>
+                            </div>
+                            <div>
+                                Prix total TTC :
+                                <strong>{{ order.totalPrice }} Dhs</strong>
+                            </div>
+                            <div>
+                                Methode de paiement :
+                                <strong>{{ order.paymentMethod }}</strong>
+                            </div>
+                            <div>
+                                Etat de paimement :
+                                <strong>{{
+                                    order.isPaid == 1 ? "Payé" : "Non Payé"
+                                }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

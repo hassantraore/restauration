@@ -1,0 +1,52 @@
+{% extends "/account/index.html.twig" %} {% block content %}
+<h4 class="font-italic mb-4">Mes Addresses</h4>
+{% if addresses|length == 0 %}
+<p class="font-italic text-muted mb-2">
+    Vous n'avez aucune addresse enregistrée.
+</p>
+{% else %}
+<div class="row">
+    {% for addresse in addresses %}
+    <div class="col-sm">
+        <div class="mb-2"><i class="fa fa-map-marker"></i></div>
+        <div class="" style="height: 180px">
+            <div class="mb-2">{{ addresse.address }}</div>
+            <div class="mb-2" style="word-break: break-word">
+                {{ addresse.complement }}
+            </div>
+            <div class="mb-2">
+                {{ addresse.phone | phone_number_format('NATIONAL') }}
+            </div>
+        </div>
+
+        <div class="d-flex mb-4">
+            <div class="mr-2">
+                <a
+                    href="{{
+                        path('app_address_edit', {
+                            id: addresse.id
+                        })
+                    }}"
+                    class="btn btn-sm btn-outline-primary"
+                    >Edit</a
+                >
+            </div>
+            <div class="">
+                {% include "account/address/actions/_delete_form.html.twig" with
+                {address:addresse} only %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% if addresses|length < 3 %}
+<div class="text-center">
+    <a
+        href="{{ path('app_address_new') }}"
+        class="mt-3 btn text-white"
+        style="background-color: #ffbe33"
+    >
+        <i class="fa fa-plus-circle"></i> Ajouter une nouvelle addresse
+    </a>
+</div>
+{% endif %} {% endblock %}

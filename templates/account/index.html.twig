@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block title %}Account{% endblock %} {% block
+main %}
+<div style="background-color: #222831; padding: 100px">
+    <h1 class="text-center text-white">Mon compte</h1>
+</div>
+
+<!-- Demo header-->
+<section class="layout_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                {% include "/account/layouts/nav.html.twig" %}
+            </div>
+
+            <div class="col-md-9">
+                <!-- Tabs content -->
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div
+                        class="tab-pane fade shadow rounded bg-white show active p-5"
+                        role="tabpanel"
+                    >
+                        {% block content %} {% endblock content %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

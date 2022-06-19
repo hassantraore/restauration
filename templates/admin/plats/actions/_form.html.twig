@@ -1,0 +1,274 @@
+{% include "./admin/layouts/header/products.html.twig" %}
+
+<section class="signin-area signin-one">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="mb-5">
+                    <h1 class="text-center">
+                        {{ title }}
+                    </h1>
+                </div>
+                {{
+                    form_start(form, {
+                        attr: {
+                            novalidate: "novalidate",
+                            id: "productForm"
+                        }
+                    })
+                }}
+                <div class="signin-form form-style-two rounded-buttons">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if form_errors(form.imageFile) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.imageFile) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer l'image du produit</label>
+                                <div class="">
+                                    {{ form_widget(form.imageFile) }}
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.name) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.name) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer le nom du produit</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.name, {
+                                            attr: {
+                                                placeholder: "Name"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.description) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.description) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer la description du produit</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.description, {
+                                            attr: {
+                                                placeholder: "Description"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.ingredient) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.ingredient) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label
+                                    >Entrer les ingredients du produits</label
+                                >
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.ingredient, {
+                                            attr: {
+                                                placeholder: "Ingredients"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.category) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.category) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer la categorie du produit</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.category, {
+                                            attr: {
+                                                placeholder: "Categories"
+                                            }
+                                        })
+                                    }}
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        {#
+                        <div class="col-md-12">
+                            {% if form_errors(form.newPrice) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.newPrice) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer le nouveau prix</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.newPrice, {
+                                            attr: {
+                                                placeholder: "Prix"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            {% if form_errors(form.oldPrice) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.oldPrice) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer l' prix</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.oldPrice, {
+                                            attr: {
+                                                placeholder: "Prix"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        #}
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter un prix</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="sizes"
+                                        data-index="{{ form.size|length > 0 ? form.size|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.size.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.size|length > 0%} {% for size
+                                        in form.size %}
+                                        <li name="tags">
+                                            {{ form_row(size.sizeName) }}
+                                            {{ form_row(size.newPrice) }}
+                                            {{ form_row(size.oldPrice) }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="sizes"
+                                    >
+                                        Add a price
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                <label>Ajouter une sauce</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="sauces"
+                                        data-index="{{ form.sauce|length > 0 ? form.sauce|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.sauce.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.sauce|length > 0%} {% for
+                                        sauce in form.sauce %}
+                                        <li name="tags">
+                                            {{ form_row(sauce.name) }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="sauces"
+                                    >
+                                        Add a sauce
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
+                                {{ form_widget(form.promotion) }}
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input rounded-buttons">
+                                <button
+                                    class="btn btn-lg btn-block"
+                                    style="background-color: #ffbe33"
+                                    type="submit"
+                                >
+                                    {{ button_label|default('Enregistrer') }}
+                                </button>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                    </div>
+                </div>
+                <!-- signin form -->
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+    <!-- container -->
+</section>
+<!--====== SIGNIN ONE PART ENDS ======-->

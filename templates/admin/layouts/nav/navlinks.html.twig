@@ -1,0 +1,143 @@
+<nav class="col-md-2 d-none d-md-block text-light sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_dashboard'))
+                    }}"
+                    href="{{ path('app_admin_dashboard') }}"
+                >
+                    <i class="fa fa-home mr-2"></i>
+                    Dashboard <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_order'))
+                    }}"
+                    href="{{ path('app_admin_order') }}"
+                >
+                    <i class="fa fa-file mr-2"></i>
+                    Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_categories'))
+                    }}"
+                    href="{{ path('app_admin_categories') }}"
+                >
+                    <i class="fa fa-list-alt mr-2" aria-hidden="true"></i>
+                    Categories
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_products'))
+                    }}"
+                    href="{{ path('app_admin_products') }}"
+                >
+                    <i class="fa fa-utensils mr-2"></i>
+
+                    Plats
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_drinks'))
+                    }}"
+                    href="{{ path('app_admin_drinks') }}"
+                >
+                    <i class="fa fa-cocktail mr-2"></i>
+
+                    Drinks
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_extras'))
+                    }}"
+                    href="{{ path('app_admin_extras') }}"
+                >
+                    <i class="fa fa-plus mr-2"></i>
+
+                    Extras
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_ingredient'))
+                    }}"
+                    href="{{ path('app_admin_ingredient') }}"
+                >
+                    <i class="fas fa-pepper-hot mr-2"></i>
+
+                    Ingredients
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fa fa-users mr-2"></i>
+
+                    Customers
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_report'))
+                    }}"
+                    href="{{ path('app_admin_report') }}"
+                >
+                    <i class="fas fa-chart-bar mr-2"></i>
+                    Reports
+                </a>
+            </li>
+        </ul>
+
+        <h6
+            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
+        >
+            <span>Saved reports</span>
+            <a class="d-flex align-items-center text-muted" href="#">
+                <span data-feather="plus-circle"></span>
+            </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Current month
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Last quarter
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Social engagement
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <span data-feather="file-text"></span>
+                    Year-end sale
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

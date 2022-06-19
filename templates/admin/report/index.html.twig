@@ -1,0 +1,79 @@
+{% extends './admin/index.html.twig' %} {% block content %}
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom"
+>
+    <h1 class="h2">Reports</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ path('app_report_new') }}" class="add text-white">
+            <i class="fa fa-plus"></i> Ajouter
+        </a>
+    </div>
+</div>
+<div class="table-responsive">
+    <h5>Total : {{ reports | length }}</h5>
+    <br />
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Exploitation_charge</th>
+                <th>Exploitation_result</th>
+                <th>Financial_product</th>
+                <th>Financial_charge</th>
+                <th>Financial_result</th>
+                <th>Current_result</th>
+                <th>No_current_product</th>
+                <th>No_current_charge</th>
+                <th>No_current_result</th>
+                <th>Result_before_impot</th>
+                <th>Impot</th>
+                <th>Result_net</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for report in reports %}
+            <tr>
+                <td>{{ report.id }}</td>
+                <td>
+                    {{ report.exploitationCharge ? report.exploitationCharge|join(', ') : '' }}
+                </td>
+                <td>{{ report.exploitationResult }}</td>
+                <td>
+                    {{ report.financialProduct ? report.financialProduct|join(', ') : '' }}
+                </td>
+                <td>
+                    {{ report.financialCharge ? report.financialCharge|join(', ') : '' }}
+                </td>
+                <td>{{ report.financialResult }}</td>
+                <td>{{ report.currentResult }}</td>
+                <td>
+                    {{ report.noCurrentProduct ? report.noCurrentProduct|join(', ') : '' }}
+                </td>
+                <td>
+                    {{ report.noCurrentCharge ? report.noCurrentCharge|join(', ') : '' }}
+                </td>
+                <td>{{ report.noCurrentResult }}</td>
+                <td>{{ report.resultBeforeImpot }}</td>
+                <td>{{ report.impot }}</td>
+                <td>{{ report.resultNet }}</td>
+                <td>
+                    <a href="{{ path('app_report_show', { id: report.id }) }}"
+                        >show</a
+                    >
+                    <a href="{{ path('app_report_edit', { id: report.id }) }}"
+                        >edit</a
+                    >
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="14">no records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_report_new') }}">Create new</a>
+</div>
+{% endblock %}

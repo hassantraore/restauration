@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %} {% block title %}Register{% endblock %} {% block
+body %} {% include "/layouts/nav/navbar.html.twig" %}
+<!--====== SIGNIN ONE PART START ======-->
+<main class="sub_page p-5">
+  <section class="signin-area signin-one">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <div class="mb-5">
+            <h1 class="text-center">Register Now</h1>
+          </div>
+
+          {{ form_start(registrationForm, {'attr':{'novalidate':'novalidate'}})
+          }}
+          <div class="signin-form form-style-two rounded-buttons">
+            <div class="row">
+              {% for flash_error in app.flashes('verify_email_error') %}
+              <div class="col-md-12">
+                <div class="form-input alert alert-danger" role="alert">
+                  {{ flash_error }}
+                </div>
+              </div>
+              {% endfor %}
+              <div class="col-md-12">
+                <div class="form-input">
+                  <label>Your account will be under this email</label>
+                  <div class="input-items default">
+                    {{ form_widget(registrationForm.email, { 'attr':{'placeholder':'Email'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }}) }}
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                </div>
+                <!-- form input -->
+              </div>
+              <div class="col-md-12">
+                <div class="form-input">
+                  <label>
+                    Last Name will be used to personalize your experience
+                  </label>
+                  <div class="input-items default">
+                    {{ form_widget(registrationForm.lastName, { 'attr':{'placeholder':'Last Name'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }}) }}
+                    <i class="fa fa-user"></i>
+                  </div>
+                </div>
+                <!-- form input -->
+              </div>
+              <div class="col-md-12">
+                <div class="form-input">
+                  <label>
+                    First Name will be used to personalize your experience
+                  </label>
+                  <div class="input-items default">
+                    {{ form_widget(registrationForm.firstName, { 'attr':{'placeholder':'First Name'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }}) }}
+                    <i class="fa fa-user"></i>
+                  </div>
+                </div>
+                <!-- form input -->
+              </div>
+              <div class="col-md-12">
+                <div class="form-input">
+                  <label>Password for your account</label>
+                  <div class="input-items default">
+                    {{ form_widget(registrationForm.plainPassword, { 'attr':{'placeholder':'Password'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }}) }}
+                    <i class="fa fa-key"></i>
+                  </div>
+                </div>
+                <!-- form input -->
+              </div>
+              <div class="col-md-12">
+                <div class="form-input rounded-buttons">
+                  <button
+                    class="btn btn-lg btn-block"
+                    style="background-color: #ffbe33"
+                    type="submit"
+                  >
+                    Sign Up
+                  </button>
+                </div>
+                <!-- form input -->
+              </div>
+              <div class="col-md-12">
+                <div class="form-input text-center">
+                  {{ form_widget(registrationForm.agreeTerms) }}
+                  <p class="text">
+                    By signing in you agree with the
+                    <a href="javascript:void(0)">Terms and Conditions</a>
+                    and
+                    <a href="javascript:void(0)">Privacy</a>
+                  </p>
+                  <p class="pt-3 text-white">
+                    Already have an account?
+                    <a href="{{ path('app_login') }}" style="color: #ffbe33"
+                      >Log in here</a
+                    >
+                  </p>
+                </div>
+                <!-- form input -->
+              </div>
+            </div>
+          </div>
+          <!-- signin form -->
+          {{ form_end(registrationForm) }}
+        </div>
+      </div>
+      <!-- row -->
+    </div>
+    <!-- container -->
+  </section>
+  <!--====== SIGNIN ONE PART ENDS ======-->
+</main>
+{% endblock %}

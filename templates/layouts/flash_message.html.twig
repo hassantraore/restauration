@@ -1,0 +1,13 @@
+{% for label, messages in app.flashes %} {% for message in messages %} {#
+<div class="alert alert-{{ label }} text-center" role="alert">
+    {{ message }}
+</div>
+#} {% endfor %} {% endfor %}
+<div class="flash-alert bg-success" style="display: none" id="flash-alert">
+    <span id="flash-message" class="">Le panier a bien ete mis a jour</span>
+    <span
+        class="closebtn ml-auto pointer"
+        onclick="this.parentElement.style.display='none';"
+        >&times;</span
+    >
+</div>

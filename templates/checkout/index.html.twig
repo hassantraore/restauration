@@ -1,0 +1,298 @@
+{% extends 'base.html.twig' %} {% block title %}Checkout{% endblock %} {% block
+main %}
+
+<section class="layout_padding checkout">
+    <div class="container">
+        <div class="row">
+            <div class="mr-auto ml-auto d-flex">
+                <div
+                    class="pointer m-2 livraison selected"
+                    id="deliver"
+                    onclick="setDelivery('deliver')"
+                >
+                    <div class="row align-items-center">
+                        <div
+                            class="col-md-2 icon selected text-center"
+                            id="icon-deliver"
+                        >
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <span href="" class="" style="font-size: 20px"
+                                ><strong> À livrer</strong> </span
+                            ><br />
+                            <span class="text-muted"
+                                >Faites vous livrer votre commande</span
+                            >
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="pointer m-2 livraison not-selected"
+                    id="take_away"
+                    onclick="setDelivery('take_away')"
+                >
+                    <div class="row align-items-center">
+                        <div
+                            class="col-md-2 icon not-selected text-center"
+                            id="icon-take_away"
+                        >
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <span href="" class="" style="font-size: 20px"
+                                ><strong> À emporter</strong> </span
+                            ><br />
+                            <span class="text-muted"
+                                >Emporter votre commande depuis le
+                                restaurant.</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-8" id="coordonnee-deliver">
+                <h4 class="mb-4">Coordonnées</h4>
+                <p class="text-muted">
+                    <em>Sélectionnez une addresse de livraison</em>
+                </p>
+                {% if addresses|length <3 %}
+                <p class="mb-4">
+                    <a
+                        href="{{ path('app_address_new') }}"
+                        class="pointer"
+                        style="text-decoration: none"
+                    >
+                        <i class="fas fa-plus mr-2"></i>Nouvelle addresse
+                    </a>
+                </p>
+                {% endif %}
+                <small
+                    id="addresseError"
+                    class="form-text text-danger mb-1"
+                    style="display: none"
+                    >Le choix d'une addresse est obligatoire !</small
+                >
+                {% for row in addresses %}
+
+                <div
+                    class="d-flex align-items-center mb-1 p-3 addresse not-selected pointer"
+                    id="addresse-{{ row.id }}"
+                    onclick="setAddresse({{ addresses_id }}, {{ row.id }})"
+                >
+                    <div class="col-md-1">
+                        <input
+                            class="pointer"
+                            type="radio"
+                            name="addresse"
+                            id="addresse-radio-{{ row.id }}"
+                            value="{{ row.id }}"
+                        />
+                    </div>
+                    <div class="col-md-3">
+                        <i class="fas fa-map-marker-alt mr-2"></i
+                        >{{ row.address }}
+                    </div>
+                    <div class="col-md-5">
+                        {{ row.complement }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ row.phone | phone_number_format('NATIONAL')}}
+                    </div>
+                </div>
+
+                {% endfor %}
+            </div>
+            <div
+                class="col-md-8"
+                style="display: none"
+                id="coordonnee-take_away"
+            >
+                <h4 class="mb-4">Coordonnées</h4>
+                <p class="text-muted">
+                    <em
+                        >Veuillez entrer les coordonnées de la personne qui
+                        viendra chercher votre commande</em
+                    >
+                </p>
+                <form>
+                    <div class="mb-3">
+                        <label for="nom" class="form-label"
+                            >Nom & prenoms *</label
+                        >
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="nom"
+                            onkeyup="setIdentifiant('nom')"
+                            aria-describedby="nameError"
+                        />
+                        <small
+                            id="nomError"
+                            class="form-text text-danger"
+                            style="display: none"
+                            >Champs requis</small
+                        >
+                    </div>
+                    {#
+                    <div class="mb-3">
+                        <label for="prenom" class="form-label">Prénoms</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="prenom"
+                            aria-describedby="emailHelp"
+                        />
+                    </div>
+                    #}
+                    <div class="mb-3">
+                        <label for="tel" class="form-label">Téléphone *</label>
+                        <input
+                            type="tel"
+                            class="form-control"
+                            id="tel"
+                            minlength="10"
+                            placeholder="ex : 0777348566"
+                            maxlength="10"
+                            onkeypress="acceptValue(event)"
+                            onkeyup="setIdentifiant('tel')"
+                            aria-describedby="telError"
+                        />
+                        <small
+                            id="telError"
+                            class="form-text text-danger"
+                            style="display: none"
+                            >Champs requis</small
+                        >
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <h4 class="mb-4">Méthode de paiement</h4>
+                <p class="text-muted mb-4">
+                    <em>Choisissez une methode de paiement</em>
+                </p>
+                <small
+                    id="paymentError"
+                    class="form-text text-danger mb-1"
+                    style="display: none"
+                    >Le choix d'une méthode de paiement est obligatoire !</small
+                >
+                <div
+                    class="mb-1 p-3 not-selected pointer"
+                    onclick="setPaymentMethod('credit_cart')"
+                    id="payment-credit_cart"
+                >
+                    <div
+                        class="form-check form-check-inline align-items-center pointer"
+                    >
+                        <input
+                            class="form-check-input mr-3 pointer"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="payment-radio-credit_cart"
+                            value="credit cart"
+                        />
+                        <label
+                            class="form-check-label pointer"
+                            for="payment-credit-cart"
+                        >
+                            <i class="fas fa-credit-card mr-2"></i>Credit card
+                        </label>
+                    </div>
+                </div>
+                <div
+                    class="mb-1 p-3 not-selected pointer"
+                    onclick="setPaymentMethod('paypal')"
+                    id="payment-paypal"
+                >
+                    <div
+                        class="form-check form-check-inline align-items-center pointer"
+                    >
+                        <input
+                            class="form-check-input mr-3 pointer"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="payment-radio-paypal"
+                            value="paypal"
+                        />
+                        <label
+                            class="form-check-label pointer"
+                            for="payment-paypal"
+                        >
+                            <i class="fab fa-cc-paypal mr-2"></i>Paypal
+                        </label>
+                    </div>
+                </div>
+                <div
+                    class="mb-1 p-3 not-selected pointer"
+                    id="payment-especes"
+                    onclick="setPaymentMethod('especes')"
+                >
+                    <div
+                        class="form-check form-check-inline align-items-center pointer"
+                    >
+                        <input
+                            class="form-check-input mr-3 pointer"
+                            type="radio"
+                            name="inlineRadioOptions"
+                            id="payment-radio-especes"
+                            value="especes"
+                        />
+                        <label
+                            class="form-check-label pointer"
+                            for="payment-especes"
+                        >
+                            <i class="fas fa-hand-holding-usd mr-2"></i>Especes
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="checkout_btn">
+            <div class="">
+                <div class="" style="text-align: right">
+                    <div>
+                        <strong>Sous-total : </strong
+                        ><span
+                            style="font-size: 1.25rem"
+                            id="cart_total_items_price"
+                            >{{ app.session.get("totalPrice") }} Dhs</span
+                        >
+                    </div>
+                    <div>
+                        <strong>Frais de livraison : </strong
+                        ><span
+                            style="font-size: 1.25rem"
+                            id="cart_total_items_price"
+                            >15 Dhs</span
+                        >
+                    </div>
+                    <div>
+                        <strong>Prix total TTC : </strong
+                        ><span
+                            style="font-size: 1.25rem"
+                            id="cart_total_items_price"
+                            >{{ app.session.get("totalPrice") + 15 }} Dhs</span
+                        >
+                    </div>
+                </div>
+                <hr />
+                <button
+                    onclick="order()"
+                    type="button"
+                    style="background-color: #222831"
+                    class="btn btn-block btn-lg text-white"
+                >
+                    Confirmer la commande
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

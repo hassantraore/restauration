@@ -1,0 +1,83 @@
+<!-- Tabs nav -->
+<div
+    class="nav flex-column nav-pills nav-pills-custom"
+    id="v-pills-tab"
+    role="tablist"
+    aria-orientation="vertical"
+>
+    <a
+        class="nav-link mb-3 p-3 shadow {{
+            set_active_route(path('app_account_dashboard'))
+        }}"
+        id="v-pills-dashboard-tab"
+        href="{{ path('app_account_dashboard') }}"
+        role="tab"
+        aria-controls="v-pills-dashboard"
+        aria-selected="true"
+    >
+        <i class="fa fa-home mr-2"></i>
+        <span class="font-weight-bold small text-uppercase">Dashboard</span></a
+    >
+    <a
+        class="nav-link mb-3 p-3 shadow"
+        id="v-pills-home-tab"
+        data-toggle="pill"
+        href="#v-pills-home"
+        role="tab"
+        aria-controls="v-pills-home"
+        aria-selected="true"
+    >
+        <i class="fas fa-user-circle mr-2"></i>
+        <span class="font-weight-bold small text-uppercase"
+            >Personal information</span
+        ></a
+    >
+
+    <a
+        class="nav-link mb-3 p-3 shadow {{
+            set_active_route(path('app_account_order'))
+        }}"
+        id="v-pills-orders-tab"
+        href="{{ path('app_account_order') }}"
+        role="tab"
+        aria-controls="v-pills-orders"
+        aria-selected="false"
+    >
+        <i class="fa fa-inbox mr-2"></i>
+        <span class="font-weight-bold small text-uppercase"
+            >Mes commandes</span
+        ></a
+    >
+
+    <a
+        class="nav-link mb-3 p-3 {{
+            set_active_route(path('app_account_address'))
+        }} shadow"
+        id="v-pills-Adresses-tab"
+        href="{{ path('app_account_address') }}"
+        role="tab"
+        aria-controls="v-pills-Adresses"
+        aria-selected="false"
+    >
+        <i class="fa fa-star mr-2"></i>
+        <span class="font-weight-bold small text-uppercase"
+            >Mes Adresses</span
+        ></a
+    >
+
+    {#
+    <a
+        class="nav-link mb-3 p-3 shadow"
+        id="v-pills-settings-tab"
+        data-toggle="pill"
+        href="#v-pills-settings"
+        role="tab"
+        aria-controls="v-pills-settings"
+        aria-selected="false"
+    >
+        <i class="fa fa-check mr-2"></i>
+        <span class="font-weight-bold small text-uppercase"
+            >Confirm booking</span
+        ></a
+    >#}
+</div>

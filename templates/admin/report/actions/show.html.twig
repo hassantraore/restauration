@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %} {% block title %}Report{% endblock %} {% block
+body %}
+<h1>Report</h1>
+
+<table class="table">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ report.id }}</td>
+        </tr>
+        <tr>
+            <th>Exploitation_charge</th>
+            <td>
+                {{ report.exploitationCharge ? report.exploitationCharge|join(', ') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <th>Exploitation_result</th>
+            <td>{{ report.exploitationResult }}</td>
+        </tr>
+        <tr>
+            <th>Financial_product</th>
+            <td>
+                {{ report.financialProduct ? report.financialProduct|join(', ') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <th>Financial_charge</th>
+            <td>
+                {{ report.financialCharge ? report.financialCharge|join(', ') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <th>Financial_result</th>
+            <td>{{ report.financialResult }}</td>
+        </tr>
+        <tr>
+            <th>Current_result</th>
+            <td>{{ report.currentResult }}</td>
+        </tr>
+        <tr>
+            <th>No_current_product</th>
+            <td>
+                {{ report.noCurrentProduct ? report.noCurrentProduct|join(', ') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <th>No_current_charge</th>
+            <td>
+                {{ report.noCurrentCharge ? report.noCurrentCharge|join(', ') : '' }}
+            </td>
+        </tr>
+        <tr>
+            <th>No_current_result</th>
+            <td>{{ report.noCurrentResult }}</td>
+        </tr>
+        <tr>
+            <th>Result_before_impot</th>
+            <td>{{ report.resultBeforeImpot }}</td>
+        </tr>
+        <tr>
+            <th>Impot</th>
+            <td>{{ report.impot }}</td>
+        </tr>
+        <tr>
+            <th>Result_net</th>
+            <td>{{ report.resultNet }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<a href="{{ path('app_admin_report') }}">back to list</a>
+
+<a href="{{ path('app_report_edit', { id: report.id }) }}">edit</a>
+
+{{ include("admin/report/actions/_delete_form.html.twig") }}
+{% endblock %}

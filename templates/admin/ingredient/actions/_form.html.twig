@@ -1,0 +1,76 @@
+{# {{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+#} {# {{ form_start(form) }}
+{{ form_widget(form) }}
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+#} {% include "./admin/layouts/header/ingredient.html.twig" %}
+
+<section class="signin-area signin-one">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="mb-5">
+                    <h1 class="text-center">
+                        {{ title }}
+                    </h1>
+                </div>
+                {{
+                    form_start(form, {
+                        attr: {
+                            novalidate: "novalidate",
+                            id: "ingredientForm"
+                        }
+                    })
+                }}
+                <div class="signin-form form-style-two rounded-buttons">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% if form_errors(form.name) %}
+                            <div
+                                class="form-input alert alert-danger"
+                                role="alert"
+                            >
+                                {{ form_errors(form.name) }}
+                            </div>
+                            {% endif %}
+                            <div class="form-input">
+                                <label>Entrer le nom de l'ingredient</label>
+                                <div class="input-items default">
+                                    {{
+                                        form_widget(form.name, {
+                                            attr: {
+                                                placeholder: "Name"
+                                            }
+                                        })
+                                    }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input rounded-buttons">
+                                <button
+                                    class="btn btn-lg btn-block"
+                                    style="background-color: #ffbe33"
+                                    type="submit"
+                                >
+                                    {{ button_label|default('Enregistrer') }}
+                                </button>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                    </div>
+                </div>
+                <!-- signin form -->
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <!-- row -->
+    </div>
+    <!-- container -->
+</section>
+<!--====== SIGNIN ONE PART ENDS ======-->

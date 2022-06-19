@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %} {% block body %} {% include
+"/layouts/nav/navbar.html.twig" %}
+<section class="layout_padding">
+    <div
+        class="container"
+        style="border: solid 1px; border-radius: 12px; padding: 60px"
+    >
+        <h3 class="text-success text-center mb-3">
+            <i class="fas fa-check-circle mr-2"></i> Succeeded
+        </h3>
+        <div class="text-center">
+            <p class="mb-5">
+                <strong>Félicitations !</strong> Votre paiement a bien été pris
+                en compte.
+            </p>
+            <a
+                href="{{ path('app_menu') }}"
+                class="btn"
+                style="background-color: #ffbe33"
+            >
+                Continuer le shopping
+            </a>
+            <a href="{{ path('app_account_order') }}" class="btn btn-primary">
+                Voir la commande
+            </a>
+        </div>
+        {#
+        <div class="card">
+            <h3 class="card-header text-success text-center">
+                <i class="fas fa-check-circle mr-2"></i> Succeeded
+            </h3>
+            <div class="card-body">
+                <h5 class="card-title">Félicitations !</h5>
+                <p class="card-text">
+                    Votre paiement a bien été pris en compte.
+                </p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+        #}
+    </div>
+</section>
+{% endblock %}

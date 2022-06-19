@@ -1,0 +1,9 @@
+{% extends './admin/index.html.twig' %} {% block content %} {% set title =
+'Éditer la categorie #' ~ category.id %}
+{{
+  include("admin/categories/actions/_form.html.twig", {
+    button_label: "Update"
+  })
+}}
+
+{% endblock %}

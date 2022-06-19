@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %} {% block title %}Cart{% endblock %}{% block main
+%}
+<section class="layout_padding" style="background-color: #eee">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-12">
+                <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                >
+                    <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+                    <div>
+                        <p class="mb-0">
+                            <span class="text-muted" id="cart_total_items"
+                                >{{ cart | length }} items</span
+                            >
+                        </p>
+                    </div>
+                </div>
+                {% for row in cart %}
+                <div
+                    class="card rounded-3 mb-4 cart_body_{{
+                        row.type
+                    }} cart_body_{{ row.type }}_{{
+                        row.item.id
+                    }} {{row.size is defined ? 'cart_body_' ~ row.type ~ '_' ~ row.item.id ~ '_' ~ row.size : '' }}"
+                    id=""
+                >
+                    <div class="card-body p-4">
+                        <div
+                            class="row d-flex justify-content-between align-items-center"
+                        >
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img
+                                    src="{{ vich_uploader_asset(row.item) }}"
+                                    class="img-fluid rounded-3"
+                                    alt="Cotton T-shirt"
+                                />
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <p class="lead fw-normal mb-2">
+                                    {{ row.item.name }}
+                                </p>
+                                <p>
+                                    {% if row.size is defined %}
+                                    <span class="text-muted">Size: </span
+                                    >{{ row.size }}<br />
+                                    {% endif %} {% if row.sauce is defined and
+                                    row.sauce is not null %}
+                                    <span class="text-muted">Sauce: </span
+                                    >{{ row.sauce }}<br />
+                                    {% endif %}
+
+                                    <span class="text-muted"
+                                        >Prix unitaire: </span
+                                    >{{ row.price }} Dhs
+                                </p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                <div
+                                    class="d-flex mr-auto ml-auto justify-content-between"
+                                    style="width: 150px; align-items: center"
+                                >
+                                    <div class="">
+                                        <a
+                                            class="pr-3 pl-3 mr-2 text-danger text-decoration-none pointer add_sub_icon"
+                                            onclick="removeProductFromCart({{
+                                                row.item.id
+                                            }},'{{
+                                                row.size is defined 
+                                                    ? row.size
+                                                    : row.item.id
+                                            }}', '{{ row.type }}')"
+                                        >
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                    </div>
+
+                                    <div>
+                                        {% if row.type == 'plat' %}
+                                        <span
+                                            id="{{ row.item.id }}_plat_{{
+                                                row.size
+                                            }}_quantity"
+                                            class="cart cart_{{ row.type }}"
+                                            >{{ row.quantity }}</span
+                                        >
+                                        {% else %}
+                                        <span
+                                            id="{{ row.type }}_{{
+                                                row.item.id
+                                            }}_quantity"
+                                            class="cart cart_{{ row.type }}"
+                                            >{{ row.quantity }}</span
+                                        >
+                                        {% endif %}
+                                    </div>
+                                    <div class="">
+                                        <a
+                                            class="pr-3 pl-3 ml-2 text-danger text-decoration-none pointer add_sub_icon"
+                                            onclick="addProductToCart({{
+                                                row.item.id
+                                            }},'{{
+                                                row.size is defined 
+                                                    ? row.size
+                                                    : row.item.id
+                                            }}', {{ row.price }}, '{{
+                                                row.type
+                                            }}')"
+                                        >
+                                            <i class="fa fa-plus"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                {% if row.type == 'plat' %}
+                                <h5
+                                    id="{{ row.item.id }}_plat_{{
+                                        row.size
+                                    }}_price"
+                                    class="mb-0 cart_{{ row.type }}_price"
+                                >
+                                    {{ row.totalPrice }} Dhs
+                                </h5>
+                                {% else %}
+                                <h5
+                                    id="{{ row.type }}_{{ row.item.id }}_price"
+                                    class="mb-0 cart_{{ row.type }}_price"
+                                >
+                                    {{ row.totalPrice }} Dhs
+                                </h5>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <a
+                                    class="text-danger pointer"
+                                    onclick="removeProductFromCart({{
+                                        row.item.id
+                                    }},'{{
+                                    row.size is defined 
+                                        ? row.size
+                                        : row.item.id
+                                }}', '{{ row.type }}', true)"
+                                    ><i class="fas fa-trash fa-lg"></i
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div
+                    class="card rounded-3 mb-4 cart_empty"
+                    style="display: none"
+                >
+                    <div class="card-body p-4 text-center">
+                        <p class="text-danger" style="font-size: 20px">
+                            Oooops !!! Votre panier est vide .
+                        </p>
+                        <a
+                            class="btn mt-4"
+                            style="background-color: #ffbe33"
+                            href="{{ path('app_menu') }}"
+                        >
+                            Ajouter des produits
+                        </a>
+                    </div>
+                </div>
+                {% if cart | length > 0 %}
+                <div class="card mb-4 checkout_btn">
+                    <div class="card-body p-4 d-flex flex-row">
+                        <div class="form-outline flex-fill">
+                            <input
+                                type="text"
+                                id="form1"
+                                class="form-control form-control-lg"
+                                placeholder="Code promo"
+                            />
+                            {#
+                            <label class="form-label" for="form1"
+                                >Discound code</label
+                            >
+                            #}
+                        </div>
+                        <button
+                            type="button"
+                            class="btn btn-outline-warning btn-lg ms-3"
+                        >
+                            Apply
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card checkout_btn">
+                    <div class="card-body">
+                        <div class="" style="text-align: right">
+                            <div>
+                                <strong>Prix total : </strong
+                                ><span
+                                    style="font-size: 1.25rem"
+                                    id="cart_total_items_price"
+                                    >{{ totalPrice }} Dhs</span
+                                >
+                            </div>
+                            <div>
+                                <p class="text-muted mt-3">
+                                    frais de livraison non inclus pour le
+                                    moment.
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <a
+                            href="{{ path('app_checkout') }}"
+                            type="button"
+                            class="btn btn-warning btn-block btn-lg"
+                        >
+                            Commander
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

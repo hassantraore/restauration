@@ -1,0 +1,140 @@
+{% extends 'base.html.twig' %} {% block title %}Wishlist{% endblock %} {% block
+main %}
+<section class="h-100 layout_padding">
+    <div class="container h-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="fw-normal mb-0 text-black mb-5">My wishlist</h3>
+                    <div
+                        class="text-center mb-5"
+                        id="wishlist-empty"
+                        style="display: none"
+                    >
+                        <p class="text-danger p-4" style="font-size: 20px">
+                            Oooops !!! Votre liste d'envie est vide .
+                        </p>
+                        <span class="mt-4">
+                            <a
+                                href="{{ path('app_menu') }}"
+                                class="btn text-decoration-none text-dark"
+                                style="background-color: #ffbe33"
+                            >
+                                Ajouter des produits
+                            </a>
+                        </span>
+                    </div>
+                    <div class="table-wishlist" id="table-wishlist">
+                        <table
+                            cellpadding="0"
+                            cellspacing="0"
+                            border="0"
+                            width="100%"
+                        >
+                            <thead>
+                                <tr>
+                                    <th width="45%">Item</th>
+                                    <th width="15%">Price</th>
+                                    <th width="15%">Status</th>
+                                    <th width="15%"></th>
+                                    <th width="10%"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for product in wishlist %}
+                                <tr
+                                    id="{{ product.item.id }}-wish-product-{{
+                                        product.type
+                                    }}"
+                                >
+                                    <td width="45%">
+                                        <div class="display-flex align-center">
+                                            <div class="img-product">
+                                                <img
+                                                    src="{{
+                                                        vich_uploader_asset(
+                                                            product.item
+                                                        )
+                                                    }} "
+                                                    alt=""
+                                                    class="mCS_img_loaded"
+                                                />
+                                            </div>
+                                            <div class="name-product">
+                                                {{ product.item.name }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td width="15%" class="price">
+                                        {{ product.item.price }} Dhs
+                                    </td>
+                                    <td width="15%">
+                                        <span class="in-stock-box bg-success"
+                                            >Disponible</span
+                                        >
+                                    </td>
+                                    <td width="15%">
+                                        {% if product.item.sauce or
+                                        (product.item.size and
+                                        product.item.size|length > 1) %}
+                                        <button
+                                            data-toggle="modal"
+                                            data-target="#wishModal{{
+                                                product.item.id
+                                            }}"
+                                            class="round-black-btn small-btn"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                        {% include "wishlist/modal.html.twig" %}
+                                        {% else %} {% if product.type == 'plat'
+                                        %}
+                                        <button
+                                            data-dismiss="modal"
+                                            onclick="moveProductToCart({{
+                                                product.item.id
+                                            }}, '{{
+                                                product.item.size[0].sizeName
+                                            }}', {{
+                                                product.item.size[0].newPrice
+                                            }})"
+                                            class="round-black-btn small-btn"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                        {% else %}
+                                        <button
+                                            onclick="moveProductToCart(0, {{
+                                                product.item.id
+                                            }}, {{ product.item.price }}, '{{
+                                                product.type
+                                            }}')"
+                                            data-dismiss="modal"
+                                            class="round-black-btn small-btn"
+                                        >
+                                            Add to Cart
+                                        </button>
+                                        {% endif %} {% endif %}
+                                    </td>
+                                    <td width="10%" class="text-center">
+                                        <a
+                                            href="javascript:void(0)"
+                                            onclick="subProductFromWishList({{
+                                                product.item.id
+                                            }}, '{{ product.type }}')"
+                                            class="trash-icon"
+                                            ><i class="far fa-trash-alt"></i
+                                        ></a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
