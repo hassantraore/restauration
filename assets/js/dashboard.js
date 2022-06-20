@@ -147,8 +147,5 @@ function showChart(cpc) {
         },
     });
 }
-function generatorColor() {
-    let randomColor = Math.floor(Math.random() * 0xffffff).toString(16);
-    return "#" + randomColor;
-}
+
 window.showChart = showChart;
