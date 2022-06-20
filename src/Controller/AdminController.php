@@ -55,6 +55,9 @@ class AdminController extends AbstractController
 
             $total = $this->getReportsTotal($value, $orderRepository);
 
+            //impot
+            $result[$month]['impot'] = $value->getImpot();
+
             // exploitation
             $totalExploitationProduct[$month] = $total['totalExploitationProduct'];
             $totalExploitationCharge[$month] = $total['totalExploitationCharge'];
@@ -204,7 +207,9 @@ class AdminController extends AbstractController
         //exploitation
         $return['totalExploitationProduct'] = 0;
         foreach ($order as $key => $_value) {
-            $return['totalExploitationProduct'] += $_value->getTotalPrice();
+            if ($_value->getIsPaid()) {
+                $return['totalExploitationProduct'] += $_value->getTotalPrice();
+            }
         }
         $return['totalExploitationCharge'] = 0;
         foreach ($report->getExploitationCharge() as $key => $_value) {

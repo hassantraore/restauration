@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Depense;
 use App\Entity\Report;
 use App\Form\ReportType;
+use App\Repository\MonthRepository;
 use App\Repository\OrderRepository;
 use App\Repository\ReportRepository;
+use App\Repository\YearRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReportController extends AbstractController
 {
     #[Route('/new', name: 'app_report_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReportRepository $reportRepository, OrderRepository $orderRepository): Response
+    public function new(Request $request, ReportRepository $reportRepository, YearRepository $yearRepository, MonthRepository $monthRepository): Response
     {
+        $year = date('Y');
+        $annee = $yearRepository->findOneBy([
+            'label' => $year,
+        ]);
+        $mois = $monthRepository->find(intval(date('m')));
         $report = new Report();
         $depense = new Depense();
+        $report->setYear($annee);
+        $report->setMonth($mois);
         $report->addExploitationCharge($depense);
         $form = $this->createForm(ReportType::class, $report);
         $form->handleRequest($request);
