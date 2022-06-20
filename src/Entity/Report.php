@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ReportRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ReportRepository::class)]
+#[UniqueEntity(['month', 'year'], 'Ce cpc existe déja')]
 class Report
 {
     #[ORM\Id]
@@ -51,6 +53,10 @@ class Report
 
     public function setExploitationCharge(array $exploitation_charge): self
     {
+        if (!empty($exploitation_charge) && $exploitation_charge == $this->exploitation_charge) {
+            reset($exploitation_charge);
+            $exploitation_charge[key($exploitation_charge)] = clone current($exploitation_charge);
+        }
         $this->exploitation_charge = $exploitation_charge;
 
         return $this;
@@ -88,6 +94,10 @@ class Report
 
     public function setFinancialProduct(?array $financial_product): self
     {
+        if (!empty($financial_product) && $financial_product == $this->financial_product) {
+            reset($financial_product);
+            $financial_product[key($financial_product)] = clone current($financial_product);
+        }
         $this->financial_product = $financial_product;
 
         return $this;
@@ -125,6 +135,10 @@ class Report
 
     public function setFinancialCharge(?array $financial_charge): self
     {
+        if (!empty($financial_charge) && $financial_charge == $this->financial_charge) {
+            reset($financial_charge);
+            $financial_charge[key($financial_charge)] = clone current($financial_charge);
+        }
         $this->financial_charge = $financial_charge;
 
         return $this;
@@ -162,6 +176,10 @@ class Report
 
     public function setNoCurrentProduct(?array $no_current_product): self
     {
+        if (!empty($no_current_product) && $no_current_product == $this->no_current_product) {
+            reset($no_current_product);
+            $no_current_product[key($no_current_product)] = clone current($no_current_product);
+        }
         $this->no_current_product = $no_current_product;
 
         return $this;
@@ -199,6 +217,10 @@ class Report
 
     public function setNoCurrentCharge(?array $no_current_charge): self
     {
+        if (!empty($no_current_charge) && $no_current_charge == $this->no_current_charge) {
+            reset($no_current_charge);
+            $no_current_charge[key($no_current_charge)] = clone current($no_current_charge);
+        }
         $this->no_current_charge = $no_current_charge;
 
         return $this;

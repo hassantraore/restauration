@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Depense;
 use App\Entity\Report;
 use App\Form\ReportType;
 use App\Repository\OrderRepository;
@@ -18,6 +19,8 @@ class ReportController extends AbstractController
     public function new(Request $request, ReportRepository $reportRepository, OrderRepository $orderRepository): Response
     {
         $report = new Report();
+        $depense = new Depense();
+        $report->addExploitationCharge($depense);
         $form = $this->createForm(ReportType::class, $report);
         $form->handleRequest($request);
 
@@ -49,6 +52,11 @@ class ReportController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $report->setExploitationCharge($report->getExploitationCharge());
+            $report->setFinancialProduct($report->getFinancialProduct());
+            $report->setFinancialCharge($report->getFinancialCharge());
+            $report->setNoCurrentCharge($report->getNoCurrentCharge());
+            $report->setNoCurrentProduct($report->getNoCurrentProduct());
             $reportRepository->add($report, true);
 
             return $this->redirectToRoute('app_admin_report', [], Response::HTTP_SEE_OTHER);
