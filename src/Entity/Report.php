@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: ReportRepository::class)]
-#[UniqueEntity(['month', 'year'], 'Ce cpc existe déja')]
+#[UniqueEntity(['month', 'year'], 'Le CPC de ce mois existe déja dans l\'annéee sélectionnée')]
 class Report
 {
     #[ORM\Id]

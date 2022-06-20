@@ -102,7 +102,7 @@ function showChart(cpc) {
                     backgroundColor: "transparent",
                     borderColor: color[0],
                     borderWidth: 4,
-                    pointBackgroundColor: color[2],
+                    pointBackgroundColor: color[0],
                 },
                 /* {
                     data: noCurrentResult,
@@ -129,7 +129,7 @@ function showChart(cpc) {
                     backgroundColor: "transparent",
                     borderColor: color[1],
                     borderWidth: 4,
-                    pointBackgroundColor: color[5],
+                    pointBackgroundColor: color[1],
                 },
             ],
         },

@@ -5,7 +5,7 @@ namespace App\Entity;
 class Depense
 {
     private $label;
-    private $mount;
+    private float $mount;
 
     public function getLabel(): ?string
     {
