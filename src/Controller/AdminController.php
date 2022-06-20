@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Report;
 use App\Form\SearchType;
 use App\Repository\CategoryRepository;
 use App\Repository\DrinkRepository;
@@ -11,7 +12,6 @@ use App\Repository\IngredientRepository;
 use App\Repository\MonthRepository;
 use App\Repository\OrderRepository;
 use App\Repository\PlatRepository;
-use App\Repository\ReportRepository;
 use App\Repository\YearRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +29,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard', name: 'app_admin_dashboard', methods: ['GET'])]
-    public function dashboard(Request $request, MonthRepository $monthRepository, YearRepository $yearRepository): Response
+    public function dashboard(Request $request, MonthRepository $monthRepository, YearRepository $yearRepository, OrderRepository $orderRepository): Response
     {
         $data = new SearchData();
 
@@ -37,10 +37,12 @@ class AdminController extends AbstractController
         $annee = $yearRepository->findOneBy([
             'label' => $year,
         ]);
+
         $data->year = $annee;
         $form = $this->createForm(SearchType::class, $data);
         $form->handleRequest($request);
         $report = $data->year->getReports();
+
         $result = [];
         $totalExploitationProduct = [];
         $totalExploitationCharge = [];
@@ -50,41 +52,37 @@ class AdminController extends AbstractController
         $totalNoCurrentCharge = [];
         foreach ($report as $key => $value) {
             $month = $value->getMonth()->getLabel();
-            $result[$month]['exploitationResult'] = $value->getExploitationResult();
-            $result[$month]['financialResult'] = $value->getFinancialResult();
-            $result[$month]['currentResult'] = $value->getCurrentResult();
-            $result[$month]['noCurrentResult'] = $value->getNoCurrentResult();
-            $result[$month]['resultBeforeImpot'] = $value->getResultBeforeImpot();
-            $result[$month]['resultNet'] = $value->getResultNet();
-            $totalExploitationProduct[$month] = 0;
-            foreach ($value->getExploitationProducts() as $key => $_value) {
-                $totalExploitationProduct[$month] += $_value['totalPrice'];
-            }
-            $totalExploitationCharge[$month] = 0;
-            foreach ($value->getExploitationCharge() as $key => $_value) {
-                $totalExploitationCharge[$month] += $_value->getMount();
-            }
-            $totalFinancialProduct[$month] = 0;
-            foreach ($value->getFinancialProduct() as $key => $_value) {
-                $totalFinancialProduct[$month] += $_value->getMount();
-            }
-            $totalFinancialCharge[$month] = 0;
-            foreach ($value->getFinancialCharge() as $key => $_value) {
-                $totalFinancialCharge[$month] += $_value->getMount();
-            }
-            $totalNoCurrentProduct[$month] = 0;
-            foreach ($value->getNoCurrentProduct() as $key => $_value) {
-                $totalNoCurrentProduct[$month] += $_value->getMount();
-            }
-            $totalNoCurrentCharge[$month] = 0;
-            foreach ($value->getNoCurrentCharge() as $key => $_value) {
-                $totalNoCurrentCharge[$month] += $_value->getMount();
-            }
+
+            $total = $this->getReportsTotal($value, $orderRepository);
+
+            // exploitation
+            $totalExploitationProduct[$month] = $total['totalExploitationProduct'];
+            $totalExploitationCharge[$month] = $total['totalExploitationCharge'];
+            $result[$month]['exploitationResult'] = $total['resultExploitation'];
+
+            //financial
+            $totalFinancialProduct[$month] = $total['totalFinancialProduct'];
+            $totalFinancialCharge[$month] = $total['totalFinancialCharge'];
+            $result[$month]['financialResult'] = $total['resultFinancial'];
+
+            //current
+            $result[$month]['currentResult'] = $total['resultCurrent'];
+
+            //no current
+            $totalNoCurrentProduct[$month] = $total['totalNoCurrentProduct'];
+            $totalNoCurrentCharge[$month] = $total['totalNoCurrentCharge'];
+            $result[$month]['noCurrentResult'] = $total['resultNoCurrent'];
+
+            //before impot
+            $result[$month]['resultBeforeImpot'] = $total['resultBeforeImpot'];
+
+            //net
+            $result[$month]['resultNet'] = $total['resultNet'];
         }
         if ($request->get('ajax') && $request->isXmlHttpRequest()) {
             return new JsonResponse([
                 'report' => $this->renderView('/admin/dashboard/cpc.html.twig', [
-                    'year' => $data->year,
+                    'year' => $data->year->getLabel(),
                     'month' => $monthRepository->findAll(),
                     'totalExploitationProduct' => $totalExploitationProduct,
                     'totalExploitationCharge' => $totalExploitationCharge,
@@ -164,10 +162,87 @@ class AdminController extends AbstractController
     }
 
     #[Route('/report', name: 'app_admin_report', methods: ['GET'])]
-    public function report(ReportRepository $reportRepository): Response
+    public function report(YearRepository $yearRepository, OrderRepository $orderRepository): Response
     {
+        $years = $yearRepository->findAll();
+        $result = [];
+        foreach ($years as $key => $year) {
+            $year_label = $year->getLabel();
+            $reports = $year->getReports();
+            $result[$year_label] = [];
+            foreach ($reports as $key => $report) {
+                $total = $this->getReportsTotal($report, $orderRepository);
+
+                $result[$year_label][] = [
+                    'id' => $report->getId(),
+                    'month' => $report->getMonth(),
+                    'exploitationResult' => $total['resultExploitation'],
+                    'financialResult' => $total['resultFinancial'],
+                    'currentResult' => $total['resultCurrent'],
+                    'noCurrentResult' => $total['resultNoCurrent'],
+                    'resultBeforeImpot' => $total['resultBeforeImpot'],
+                    'impot' => $report->getImpot(),
+                    'resultNet' => $total['resultNet'],
+                ];
+            }
+        }
+
         return $this->render('admin/report/index.html.twig', [
-            'reports' => $reportRepository->findAll(),
+            'years' => $years,
+            'reports' => $result,
         ]);
+    }
+
+    public function getReportsTotal(Report $report, OrderRepository $orderRepository)
+    {
+        $return = [];
+
+        $mois = $report->getMonth()->getId();
+        $annee = $report->getYear()->getLabel();
+        $order = $orderRepository->getExploitationProducts($mois, $annee);
+
+        //exploitation
+        $return['totalExploitationProduct'] = 0;
+        foreach ($order as $key => $_value) {
+            $return['totalExploitationProduct'] += $_value->getTotalPrice();
+        }
+        $return['totalExploitationCharge'] = 0;
+        foreach ($report->getExploitationCharge() as $key => $_value) {
+            $return['totalExploitationCharge'] += $_value->getMount();
+        }
+        $return['resultExploitation'] = $return['totalExploitationProduct'] - $return['totalExploitationCharge'];
+
+        //financial
+        $return['totalFinancialProduct'] = 0;
+        foreach ($report->getFinancialProduct() as $key => $_value) {
+            $return['totalFinancialProduct'] += $_value->getMount();
+        }
+        $return['totalFinancialCharge'] = 0;
+        foreach ($report->getFinancialCharge() as $key => $_value) {
+            $return['totalFinancialCharge'] += $_value->getMount();
+        }
+        $return['resultFinancial'] = $return['totalFinancialProduct'] - $return['totalFinancialCharge'];
+
+        //current
+        $return['resultCurrent'] = $return['resultFinancial'] + $return['resultExploitation'];
+
+        //no current
+        $return['totalNoCurrentProduct'] = 0;
+        foreach ($report->getNoCurrentProduct() as $key => $_value) {
+            $return['totalNoCurrentProduct'] += $_value->getMount();
+        }
+        $return['totalNoCurrentCharge'] = 0;
+        foreach ($report->getNoCurrentCharge() as $key => $_value) {
+            $return['totalNoCurrentCharge'] += $_value->getMount();
+        }
+        $return['resultNoCurrent'] = $return['totalNoCurrentProduct'] - $return['totalNoCurrentCharge'];
+
+        //beforeImpot
+        $return['resultBeforeImpot'] = $return['resultNoCurrent'] + $return['resultCurrent'];
+
+        //net
+        $return['resultNet'] = $return['resultBeforeImpot'] - $report->getImpot();
+
+        return $return;
     }
 }

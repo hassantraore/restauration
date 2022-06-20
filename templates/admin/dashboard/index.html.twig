@@ -33,4 +33,7 @@
         #}
     </div>
 </div>
-{% include "/admin/dashboard/cpc.html.twig" %} {% endblock %}
+<div class="dashboard" data-cpc="{{cpc|json_encode()}}">
+    {% include "/admin/dashboard/cpc.html.twig" %}
+</div>
+{% endblock %}

@@ -1,39 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("myChart")) {
         var cpc = $(".dashboard").data("cpc");
-
         showChart(cpc);
     }
 
-    var form = document.querySelector(".js-dashboard-form");
-    form.querySelector("select").addEventListener("change", function () {
-        const data = new FormData(this.form);
-        const url = new URL(
-            this.form.getAttribute("action") || window.location.href
-        );
-        const params = new URLSearchParams();
-        data.forEach((value, key) => {
-            params.append(key, value);
+    if (document.querySelector(".js-dashboard-form")) {
+        var form = document.querySelector(".js-dashboard-form");
+
+        form.querySelector("select").addEventListener("change", function () {
+            const data = new FormData(this.form);
+            const url = new URL(
+                this.form.getAttribute("action") || window.location.href
+            );
+            const params = new URLSearchParams();
+            data.forEach((value, key) => {
+                params.append(key, value);
+            });
+            let link = url.pathname + "?" + params.toString();
+            const parameter = new URLSearchParams(link.split("?")[1] || "");
+            parameter.set("ajax", 1);
+            link = link.split("?")[0] + "?" + parameter.toString();
+            $.ajax({
+                url: link,
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                },
+            }).then((response) => {
+                history.replaceState({}, "", link);
+                if (document.querySelector(".dashboard")) {
+                    document.querySelector(".dashboard").innerHTML =
+                        response.report;
+                    showChart(response.cpc);
+                }
+            });
         });
-        let link = url.pathname + "?" + params.toString();
-        const parameter = new URLSearchParams(link.split("?")[1] || "");
-        parameter.set("ajax", 1);
-        link = link.split("?")[0] + "?" + parameter.toString();
-        $.ajax({
-            url: link,
-            method: "GET",
-            headers: {
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        }).then((response) => {
-            console.log(response);
-            if (document.querySelector(".dashboard")) {
-                document.querySelector(".dashboard").innerHTML =
-                    response.report;
-                showChart(response.cpc);
-            }
-        });
-    });
+    }
 });
 /* globals Chart:false, feather:false */
 
@@ -55,18 +57,18 @@ function showChart(cpc) {
         "Decembre",
     ];
     let color = ["red", "blue", "green", "violet", "indigo", "orange"];
-    let exploitationResult = [];
-    let financialResult = [];
+    /* let exploitationResult = [];
+    let financialResult = []; */
     let currentResult = [];
-    let noCurrentResult = [];
-    let resultBeforeImpot = [];
+    /* let noCurrentResult = [];
+    let resultBeforeImpot = []; */
     let resultNet = [];
     for (const month of months) {
-        exploitationResult.push(cpc[month] ? cpc[month].exploitationResult : 0);
-        financialResult.push(cpc[month] ? cpc[month].financialResult : 0);
+        /* exploitationResult.push(cpc[month] ? cpc[month].exploitationResult : 0);
+        financialResult.push(cpc[month] ? cpc[month].financialResult : 0); */
         currentResult.push(cpc[month] ? cpc[month].currentResult : 0);
-        noCurrentResult.push(cpc[month] ? cpc[month].noCurrentResult : 0);
-        resultBeforeImpot.push(cpc[month] ? cpc[month].resultBeforeImpot : 0);
+        /*  noCurrentResult.push(cpc[month] ? cpc[month].noCurrentResult : 0);
+        resultBeforeImpot.push(cpc[month] ? cpc[month].resultBeforeImpot : 0); */
         resultNet.push(cpc[month] ? cpc[month].resultNet : 0);
     }
     // eslint-disable-next-line no-unused-vars
@@ -75,7 +77,7 @@ function showChart(cpc) {
         data: {
             labels: months,
             datasets: [
-                {
+                /* {
                     data: exploitationResult,
                     lineTension: 0,
                     label: "Resultat d'exploitation",
@@ -92,17 +94,17 @@ function showChart(cpc) {
                     borderColor: color[1],
                     borderWidth: 4,
                     pointBackgroundColor: color[1],
-                },
+                }, */
                 {
                     data: currentResult,
                     lineTension: 0,
                     label: "Resultat courant",
                     backgroundColor: "transparent",
-                    borderColor: color[2],
+                    borderColor: color[0],
                     borderWidth: 4,
                     pointBackgroundColor: color[2],
                 },
-                {
+                /* {
                     data: noCurrentResult,
                     lineTension: 0,
                     label: "Resultat non courant",
@@ -119,13 +121,13 @@ function showChart(cpc) {
                     borderColor: color[4],
                     borderWidth: 4,
                     pointBackgroundColor: color[4],
-                },
+                }, */
                 {
                     data: resultNet,
                     lineTension: 0,
                     label: "Resultat Net",
                     backgroundColor: "transparent",
-                    borderColor: color[5],
+                    borderColor: color[1],
                     borderWidth: 4,
                     pointBackgroundColor: color[5],
                 },
