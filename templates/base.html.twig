@@ -2,6 +2,10 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link
             rel="icon"
@@ -47,6 +51,17 @@
                     mapProp
                 );
             }
+            // to get current year
+            function getYear() {
+                var currentDate = new Date();
+                var currentYear = currentDate.getFullYear();
+                if (document.querySelector("#displayYear")) {
+                    document.querySelector("#displayYear").innerHTML =
+                        currentYear;
+                }
+            }
+
+            getYear();
         </script>
         <!-- Google Map -->
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>

@@ -14,6 +14,9 @@ class Report
     private $id;
 
     #[ORM\Column(type: 'array')]
+    private $exploitation_products = [];
+
+    #[ORM\Column(type: 'array')]
     private $exploitation_charge = [];
 
     #[ORM\Column(type: 'float')]
@@ -351,6 +354,18 @@ class Report
     public function setYear(?Year $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getExploitationProducts(): ?array
+    {
+        return $this->exploitation_products;
+    }
+
+    public function setExploitationProducts(array $exploitation_products): self
+    {
+        $this->exploitation_products = $exploitation_products;
 
         return $this;
     }

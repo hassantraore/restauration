@@ -16,64 +16,67 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Exploitation_charge</th>
-                <th>Exploitation_result</th>
-                <th>Financial_product</th>
-                <th>Financial_charge</th>
-                <th>Financial_result</th>
-                <th>Current_result</th>
-                <th>No_current_product</th>
-                <th>No_current_charge</th>
-                <th>No_current_result</th>
-                <th>Result_before_impot</th>
+                <th>Mois</th>
+                <th>Resultat d'exploitation</th>
+                <th>Resultat financiere</th>
+                <th>Resultat courant</th>
+                <th>Resultat non courant</th>
+                <th>Resulat avant impot</th>
                 <th>Impot</th>
-                <th>Result_net</th>
-                <th>actions</th>
+                <th>Result net</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             {% for report in reports %}
             <tr>
                 <td>{{ report.id }}</td>
-                <td>
-                    {{ report.exploitationCharge ? report.exploitationCharge|join(', ') : '' }}
-                </td>
+                <td>{{ report.month.label }}</td>
                 <td>{{ report.exploitationResult }}</td>
-                <td>
-                    {{ report.financialProduct ? report.financialProduct|join(', ') : '' }}
-                </td>
-                <td>
-                    {{ report.financialCharge ? report.financialCharge|join(', ') : '' }}
-                </td>
+
                 <td>{{ report.financialResult }}</td>
                 <td>{{ report.currentResult }}</td>
-                <td>
-                    {{ report.noCurrentProduct ? report.noCurrentProduct|join(', ') : '' }}
-                </td>
-                <td>
-                    {{ report.noCurrentCharge ? report.noCurrentCharge|join(', ') : '' }}
-                </td>
+
                 <td>{{ report.noCurrentResult }}</td>
                 <td>{{ report.resultBeforeImpot }}</td>
                 <td>{{ report.impot }}</td>
                 <td>{{ report.resultNet }}</td>
                 <td>
-                    <a href="{{ path('app_report_show', { id: report.id }) }}"
-                        >show</a
-                    >
-                    <a href="{{ path('app_report_edit', { id: report.id }) }}"
-                        >edit</a
-                    >
+                    <div class="d-flex">
+                        <div class="mr-2">
+                            <a
+                                class="btn btn-sm btn-success"
+                                href="{{
+                                    path('app_report_show', { id: report.id })
+                                }}"
+                                ><i class="fa fa-eye"></i
+                            ></a>
+                        </div>
+                        <div class="mr-2">
+                            <a
+                                class="btn btn-sm btn-primary"
+                                href="{{
+                                    path('app_report_edit', { id: report.id })
+                                }}"
+                                ><i class="fa fa-pencil-alt"></i
+                            ></a>
+                        </div>
+                        <div>
+                            {{
+                                include(
+                                    "admin/report/actions/_delete_form.html.twig"
+                                )
+                            }}
+                        </div>
+                    </div>
                 </td>
             </tr>
             {% else %}
             <tr>
-                <td colspan="14">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_report_new') }}">Create new</a>
 </div>
 {% endblock %}

@@ -1,0 +1,147 @@
+<div class="dashboard" data-cpc="{{cpc|json_encode()}}">
+    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+
+    <h2>Compte de produits et charges</h2>
+    <div class="table-responsive">
+        <table class="table table-hover table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th rowspan="2">Produits / Charges</th>
+                    <th colspan="12" class="text-center">{{ year }}</th>
+                </tr>
+                <tr>
+                    <th>Janvier</th>
+                    <th>Fevrier</th>
+                    <th>Mars</th>
+                    <th>Avril</th>
+                    <th>Mai</th>
+                    <th>Juin</th>
+                    <th>Juillet</th>
+                    <th>Aout</th>
+                    <th>Septembre</th>
+                    <th>Octobre</th>
+                    <th>Novembre</th>
+                    <th>Decembre</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Produits d'exploitation</td>
+                    {% for row in month %}
+                    <td>
+                        {{ totalExploitationProduct[row.label] is defined ? totalExploitationProduct[row.label] : 0.00 }}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Charges d'exploitation</td>
+                    {% for row in month %}
+                    <td>
+                        {{totalExploitationCharge[row.label] is defined ? totalExploitationCharge[row.label] : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultats d'exploitation</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].exploitationResult is defined and cpc[row.label].exploitationResult > 0) ? '#4edb4e': cpc[row.label].exploitationResult is not defined ? '' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].exploitationResult is defined ?  cpc[row.label].exploitationResult : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Produits Financiers</td>
+                    {% for row in month %}
+                    <td>
+                        {{ totalFinancialProduct[row.label] is defined ?  totalFinancialProduct[row.label] : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Charges financieres</td>
+                    {% for row in month %}
+                    <td>
+                        {{ totalFinancialCharge[row.label] is defined ?  totalFinancialCharge[row.label] : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultat financier</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].financialResult is defined and cpc[row.label].financialResult > 0) ? '#4edb4e': cpc[row.label].financialResult is not defined ? '' : cpc[row.label].financialResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].financialResult is defined ?  cpc[row.label].financialResult : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultat courant</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].currentResult is defined and cpc[row.label].currentResult > 0) ? '#4edb4e': cpc[row.label].currentResult is not defined ? '' : cpc[row.label].currentResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].currentResult is defined ?  cpc[row.label].currentResult : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Produits non courant</td>
+                    {% for row in month %}
+                    <td>
+                        {{ totalNoCurrentProduct[row.label] is defined ?  totalNoCurrentProduct[row.label] : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Charges non courantes</td>
+                    {% for row in month %}
+                    <td>
+                        {{ totalNoCurrentCharge[row.label] is defined ?  totalNoCurrentCharge[row.label] : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultat non courant</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].noCurrentResult is defined and cpc[row.label].noCurrentResult > 0) ? '#4edb4e': cpc[row.label].noCurrentResult is not defined ? '' : cpc[row.label].noCurrentResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].noCurrentResult is defined ?  cpc[row.label].noCurrentResult : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultat avant impot</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].resultBeforeImpot is defined and cpc[row.label].resultBeforeImpot > 0) ? '#4edb4e': cpc[row.label].resultBeforeImpot is not defined ? '' : cpc[row.label].resultBeforeImpot == 0 ? '#ffbe33' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].resultBeforeImpot is defined ?  cpc[row.label].resultBeforeImpot : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td>Impots</td>
+                    {% for row in month %}
+                    <td>
+                        {{ cpc[row.label].impot is defined ?  cpc[row.label].impot : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <th>Resultat net</th>
+                    {% for row in month %}
+                    <td
+                        style="background-color: {{ (cpc[row.label].resultNet is defined and cpc[row.label].resultNet > 0) ? '#4edb4e': cpc[row.label].resultNet is not defined ? '' : cpc[row.label].resultNet == 0 ? '#ffbe33' : '#f72323'}};"
+                    >
+                        {{ cpc[row.label].resultNet is defined ?  cpc[row.label].resultNet : 0.00}}
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

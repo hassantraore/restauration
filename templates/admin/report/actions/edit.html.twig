@@ -1,12 +1,9 @@
-{% extends 'base.html.twig' %} {% block title %}Edit Report{% endblock %} {%
-block body %}
-<h1>Edit Report</h1>
-
+{% extends './admin/index.html.twig' %} {% block content %} {% set title =
+'Éditer le report #' ~ report.id %}
 {{
-    include("admin/report/actions/_form.html.twig", { button_label: "Update" })
+    include("admin/report/actions/_form.html.twig", {
+        button_label: "Update"
+    })
 }}
 
-<a href="{{ path('app_admin_report') }}">back to list</a>
-
-{{ include("admin/report/actions/_delete_form.html.twig") }}
 {% endblock %}

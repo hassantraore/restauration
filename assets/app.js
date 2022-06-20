@@ -22,6 +22,7 @@ require("./js/cart");
 require("./js/checkout");
 require("./js/wishlist");
 require("./js/dashboard");
+require("./js/report");
 import "./js/product";
 
 // Angular

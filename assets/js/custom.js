@@ -21,7 +21,7 @@ $(window).on("load", function () {
 
 // nice select
 $(document).ready(function () {
-    /* $("select").niceSelect(); */
+    /* $(".dashboard-year").niceSelect(); */
 });
 
 // client section owl carousel

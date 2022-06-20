@@ -23,7 +23,6 @@ class Month
 
     public function __construct()
     {
-        $this->years = new ArrayCollection();
         $this->reports = new ArrayCollection();
     }
 

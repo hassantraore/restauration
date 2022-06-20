@@ -23,7 +23,6 @@ class Year
 
     public function __construct()
     {
-        $this->months = new ArrayCollection();
         $this->reports = new ArrayCollection();
     }
 
@@ -72,5 +71,10 @@ class Year
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->label;
     }
 }

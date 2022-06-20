@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Order;
+use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +39,22 @@ class OrderRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getExploitationProducts($mois, $annee)
+    {
+        $date_debut = date('d-m-Y', mktime(0, 0, 0, $mois, 1, $annee));
+        $date_debut = new DateTimeImmutable($date_debut);
+        $date_fin = date('d-m-Y', mktime(0, 0, 0, $mois + 1, 0, $annee));
+        $date_fin = new DateTimeImmutable($date_fin);
+        $qb = $this->createQueryBuilder('e')
+        ->andWhere('e.createdAt BETWEEN :from AND :to')
+        ->setParameter('from', $date_debut)
+        ->setParameter('to', $date_fin)
+    ;
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
     }
 
 //    /**
