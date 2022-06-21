@@ -61,6 +61,7 @@ class ReportController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $report->setExploitationProduct($report->getExploitationProduct());
             $report->setExploitationCharge($report->getExploitationCharge());
             $report->setFinancialProduct($report->getFinancialProduct());
             $report->setFinancialCharge($report->getFinancialCharge());

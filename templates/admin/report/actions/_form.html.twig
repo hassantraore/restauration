@@ -122,6 +122,45 @@
                         #}
                         <div class="col-md-12">
                             <div class="form-input">
+                                <label>Ajouter un produit d'exploitation</label>
+                                <div class="input-items default">
+                                    <ul
+                                        class="exploitation_product"
+                                        data-index="{{ form.exploitation_product|length > 0 ? form.exploitation_product|last.vars.name + 1 : 0 }}"
+                                        data-prototype="{{ form_widget(form.exploitation_product.vars.prototype)|e('html_attr') }}"
+                                    >
+                                        {% if form.exploitation_product|length >
+                                        0%} {% for exploitation_product in
+                                        form.exploitation_product %}
+                                        <li name="tags">
+                                            {{
+                                                form_row(
+                                                    exploitation_product.label
+                                                )
+                                            }}
+                                            {{
+                                                form_row(
+                                                    exploitation_product.mount
+                                                )
+                                            }}
+                                        </li>
+                                        {% endfor %} {% endif %}
+                                    </ul>
+                                    <a
+                                        href="#"
+                                        onclick="event.preventDefault()"
+                                        style="margin-bottom: 1rem"
+                                        class="btn btn-primary btn-sm add_item_link"
+                                        data-collection-holder-class="exploitation_product"
+                                    >
+                                        Add an exploitation product
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- form input -->
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-input">
                                 <label>Ajouter une charge d'exploitation</label>
                                 <div class="input-items default">
                                     <ul

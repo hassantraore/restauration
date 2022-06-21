@@ -50,6 +50,22 @@ class AdminController extends AbstractController
         $totalFinancialCharge = [];
         $totalNoCurrentProduct = [];
         $totalNoCurrentCharge = [];
+        $total = [];
+        $all_total = [
+            'impot' => 0,
+            'totalExploitationProduct' => 0,
+            'totalExploitationCharge' => 0,
+            'exploitationResult' => 0,
+            'totalFinancialProduct' => 0,
+            'totalFinancialCharge' => 0,
+            'resultFinancial' => 0,
+            'resultCurrent' => 0,
+            'totalNoCurrentProduct' => 0,
+            'totalNoCurrentCharge' => 0,
+            'resultNoCurrent' => 0,
+            'resultBeforeImpot' => 0,
+            'resultNet' => 0,
+        ];
         foreach ($report as $key => $value) {
             $month = $value->getMonth()->getLabel();
 
@@ -57,30 +73,49 @@ class AdminController extends AbstractController
 
             //impot
             $result[$month]['impot'] = $value->getImpot();
+            $all_total['impot'] += $value->getImpot();
 
             // exploitation
             $totalExploitationProduct[$month] = $total['totalExploitationProduct'];
+            $all_total['totalExploitationProduct'] += $total['totalExploitationProduct'];
+
             $totalExploitationCharge[$month] = $total['totalExploitationCharge'];
+            $all_total['totalExploitationCharge'] += $total['totalExploitationCharge'];
+
             $result[$month]['exploitationResult'] = $total['resultExploitation'];
+            $all_total['exploitationResult'] += $total['resultExploitation'];
 
             //financial
             $totalFinancialProduct[$month] = $total['totalFinancialProduct'];
+            $all_total['totalFinancialProduct'] += $total['totalFinancialProduct'];
+
             $totalFinancialCharge[$month] = $total['totalFinancialCharge'];
+            $all_total['totalFinancialCharge'] += $total['totalFinancialCharge'];
+
             $result[$month]['financialResult'] = $total['resultFinancial'];
+            $all_total['resultFinancial'] += $total['resultFinancial'];
 
             //current
             $result[$month]['currentResult'] = $total['resultCurrent'];
+            $all_total['resultCurrent'] += $total['resultCurrent'];
 
             //no current
             $totalNoCurrentProduct[$month] = $total['totalNoCurrentProduct'];
+            $all_total['totalNoCurrentProduct'] += $total['totalNoCurrentProduct'];
+
             $totalNoCurrentCharge[$month] = $total['totalNoCurrentCharge'];
+            $all_total['totalNoCurrentCharge'] += $total['totalNoCurrentCharge'];
+
             $result[$month]['noCurrentResult'] = $total['resultNoCurrent'];
+            $all_total['resultNoCurrent'] += $total['resultNoCurrent'];
 
             //before impot
             $result[$month]['resultBeforeImpot'] = $total['resultBeforeImpot'];
+            $all_total['resultBeforeImpot'] += $total['resultBeforeImpot'];
 
             //net
             $result[$month]['resultNet'] = $total['resultNet'];
+            $all_total['resultNet'] += $total['resultNet'];
         }
         if ($request->get('ajax') && $request->isXmlHttpRequest()) {
             return new JsonResponse([
@@ -94,6 +129,7 @@ class AdminController extends AbstractController
                     'totalNoCurrentProduct' => $totalNoCurrentProduct,
                     'totalNoCurrentCharge' => $totalNoCurrentCharge,
                     'cpc' => $result,
+                    'total' => $all_total,
                 ]),
                 'cpc' => $result,
             ]);
@@ -110,6 +146,7 @@ class AdminController extends AbstractController
             'totalNoCurrentProduct' => $totalNoCurrentProduct,
             'totalNoCurrentCharge' => $totalNoCurrentCharge,
             'cpc' => $result,
+            'total' => $all_total,
             'form' => $form->createView(),
         ]);
     }

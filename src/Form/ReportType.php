@@ -30,7 +30,15 @@ class ReportType extends AbstractType
 
             // uses the User.username property as the visible option string
             'choice_label' => 'label',
-        ])
+               ])
+            ->add('exploitation_product', CollectionType::class, [
+                'entry_type' => DepenseType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false,
+            ])
             ->add('exploitation_charge', CollectionType::class, [
                 'entry_type' => DepenseType::class,
                 'entry_options' => ['label' => false],

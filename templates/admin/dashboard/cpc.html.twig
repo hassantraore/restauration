@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th rowspan="2">Produits / Charges</th>
-                <th colspan="12" class="text-center">{{ year }}</th>
+                <th colspan="13" class="text-center">{{ year }}</th>
             </tr>
             <tr>
                 <th>Janvier</th>
@@ -21,6 +21,7 @@
                 <th>Octobre</th>
                 <th>Novembre</th>
                 <th>Decembre</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                     {{ totalExploitationProduct[row.label] is defined ? totalExploitationProduct[row.label] : 0.00 }}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalExploitationProduct }}</td>
             </tr>
             <tr>
                 <td>Charges d'exploitation</td>
@@ -39,16 +41,24 @@
                     {{totalExploitationCharge[row.label] is defined ? totalExploitationCharge[row.label] : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalExploitationCharge }}</td>
             </tr>
             <tr>
                 <th>Resultats d'exploitation</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].exploitationResult is defined and cpc[row.label].exploitationResult > 0) ? '#4edb4e': cpc[row.label].exploitationResult is not defined ? '' : '#f72323'}};"
+                    style="{{
+                        cpc[row.label] is defined
+                            ? set_bg_color(cpc[row.label].exploitationResult)
+                            : ''
+                    }}"
                 >
                     {{ cpc[row.label].exploitationResult is defined ?  cpc[row.label].exploitationResult : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.exploitationResult) }}">
+                    {{ total.exploitationResult }}
+                </td>
             </tr>
             <tr>
                 <td>Produits Financiers</td>
@@ -57,6 +67,7 @@
                     {{ totalFinancialProduct[row.label] is defined ?  totalFinancialProduct[row.label] : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalFinancialProduct }}</td>
             </tr>
             <tr>
                 <td>Charges financieres</td>
@@ -65,26 +76,39 @@
                     {{ totalFinancialCharge[row.label] is defined ?  totalFinancialCharge[row.label] : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalFinancialCharge }}</td>
             </tr>
             <tr>
                 <th>Resultat financier</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].financialResult is defined and cpc[row.label].financialResult > 0) ? '#4edb4e': cpc[row.label].financialResult is not defined ? '' : cpc[row.label].financialResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    style="{{
+                        cpc[row.label] is defined
+                            ? set_bg_color(cpc[row.label].financialResult)
+                            : ''
+                    }}"
                 >
                     {{ cpc[row.label].financialResult is defined ?  cpc[row.label].financialResult : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.resultFinancial) }}">
+                    {{ total.resultFinancial }}
+                </td>
             </tr>
             <tr>
                 <th>Resultat courant</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].currentResult is defined and cpc[row.label].currentResult > 0) ? '#4edb4e': cpc[row.label].currentResult is not defined ? '' : cpc[row.label].currentResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    style="{{cpc[row.label] is defined
+                        ? set_bg_color(cpc[row.label].currentResult)
+                        : ''}}"
                 >
                     {{ cpc[row.label].currentResult is defined ?  cpc[row.label].currentResult : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.resultCurrent) }}">
+                    {{ total.resultCurrent }}
+                </td>
             </tr>
             <tr>
                 <td>Produits non courant</td>
@@ -93,6 +117,7 @@
                     {{ totalNoCurrentProduct[row.label] is defined ?  totalNoCurrentProduct[row.label] : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalNoCurrentProduct }}</td>
             </tr>
             <tr>
                 <td>Charges non courantes</td>
@@ -101,26 +126,37 @@
                     {{ totalNoCurrentCharge[row.label] is defined ?  totalNoCurrentCharge[row.label] : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.totalNoCurrentCharge }}</td>
             </tr>
             <tr>
                 <th>Resultat non courant</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].noCurrentResult is defined and cpc[row.label].noCurrentResult > 0) ? '#4edb4e': cpc[row.label].noCurrentResult is not defined ? '' : cpc[row.label].noCurrentResult == 0 ? '#ffbe33' : '#f72323'}};"
+                    style="{{cpc[row.label] is defined
+                        ? set_bg_color(cpc[row.label].noCurrentResult)
+                        : ''}}"
                 >
                     {{ cpc[row.label].noCurrentResult is defined ?  cpc[row.label].noCurrentResult : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.resultNoCurrent) }}">
+                    {{ total.resultNoCurrent }}
+                </td>
             </tr>
             <tr>
                 <th>Resultat avant impot</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].resultBeforeImpot is defined and cpc[row.label].resultBeforeImpot > 0) ? '#4edb4e': cpc[row.label].resultBeforeImpot is not defined ? '' : cpc[row.label].resultBeforeImpot == 0 ? '#ffbe33' : '#f72323'}};"
+                    style="{{cpc[row.label] is defined
+                        ? set_bg_color(cpc[row.label].resultBeforeImpot)
+                        : ''}}"
                 >
                     {{ cpc[row.label].resultBeforeImpot is defined ?  cpc[row.label].resultBeforeImpot : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.resultBeforeImpot) }}">
+                    {{ total.resultBeforeImpot }}
+                </td>
             </tr>
             <tr>
                 <td>Impots</td>
@@ -129,16 +165,22 @@
                     {{ cpc[row.label].impot is defined ?  cpc[row.label].impot : 0.00}}
                 </td>
                 {% endfor %}
+                <td>{{ total.impot }}</td>
             </tr>
             <tr>
                 <th>Resultat net</th>
                 {% for row in month %}
                 <td
-                    style="background-color: {{ (cpc[row.label].resultNet is defined and cpc[row.label].resultNet > 0) ? '#4edb4e': cpc[row.label].resultNet is not defined ? '' : cpc[row.label].resultNet == 0 ? '#ffbe33' : '#f72323'}};"
+                    style="{{cpc[row.label] is defined
+                        ? set_bg_color(cpc[row.label].resultNet)
+                        : ''}}"
                 >
                     {{ cpc[row.label].resultNet is defined ?  cpc[row.label].resultNet : 0.00}}
                 </td>
                 {% endfor %}
+                <td style="{{ set_bg_color(total.resultNet) }}">
+                    {{ total.resultNet }}
+                </td>
             </tr>
         </tbody>
     </table>

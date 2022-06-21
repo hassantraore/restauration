@@ -30,6 +30,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFunction('set_active_route', [$this, 'setActiveRoute']),
+            new TwigFunction('set_bg_color', [$this, 'setBgColor']),
         ];
     }
 
@@ -38,6 +39,21 @@ class AppExtension extends AbstractExtension
         $currentRoute = $this->requestStack->getCurrentRequest()->getPathInfo();
 
         return str_starts_with($currentRoute, $route) ? 'active' : '';
+    }
+
+    public function setBgColor($value): string
+    {
+        $color = '';
+
+        if ($value > 0) {
+            $color = '#4edb4e';
+        } elseif ($value == 0) {
+            $color = '#ffbe33';
+        } else {
+            $color = '#f72323';
+        }
+
+        return 'background-color: '.$color;
     }
 
     public function jsonDecode($str)

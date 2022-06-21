@@ -41,6 +41,9 @@ class Report
     #[ORM\JoinColumn(nullable: false)]
     private $year;
 
+    #[ORM\Column(type: 'array', nullable: true)]
+    private $exploitation_product = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -283,6 +286,22 @@ class Report
     public function setYear(?Year $year): self
     {
         $this->year = $year;
+
+        return $this;
+    }
+
+    public function getExploitationProduct(): ?array
+    {
+        return $this->exploitation_product;
+    }
+
+    public function setExploitationProduct(?array $exploitation_product): self
+    {
+        if (!empty($exploitation_product) && $exploitation_product == $this->exploitation_product) {
+            reset($exploitation_product);
+            $exploitation_product[key($exploitation_product)] = clone current($exploitation_product);
+        }
+        $this->exploitation_product = $exploitation_product;
 
         return $this;
     }
