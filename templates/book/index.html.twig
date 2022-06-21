@@ -12,46 +12,84 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form_container">
-                    <form action="">
-                        <div>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Your Name"
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="Phone Number"
-                            />
-                        </div>
-                        <div>
-                            <input
-                                type="email"
-                                class="form-control"
-                                placeholder="Your Email"
-                            />
-                        </div>
-                        <div>
-                            <select class="form-control nice-select wide">
-                                <option value="" disabled selected>
-                                    How many persons?
-                                </option>
-                                <option value="">2</option>
-                                <option value="">3</option>
-                                <option value="">4</option>
-                                <option value="">5</option>
-                            </select>
-                        </div>
-                        <div>
-                            <input type="date" class="form-control" />
-                        </div>
-                        <div class="btn_box">
-                            <button>Book Now</button>
-                        </div>
-                    </form>
+                    {{
+                        form_start(form, {
+                            attr: {
+                                novalidate: "novalidate",
+                            }
+                        })
+                    }}
+                    {#
+                    <div>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Your Name"
+                        />
+                    </div>
+                    #}
+                    {{ form_row(form.name, {'attr':{placeholder:'Your Name'}})
+                    }} {#
+                    <div>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Phone Number"
+                        />
+                    </div>
+                    #}
+                    {{
+                        form_row(form.phone_number, {
+                            attr: {
+                                placeholder: "Phone Number"
+                            }
+                        })
+                    }}
+                    {#
+                    <div>
+                        <input
+                            type="email"
+                            class="form-control"
+                            placeholder="Your Email"
+                        />
+                    </div>
+                    #}
+                    {{
+                        form_row(form.email, {
+                            attr: { placeholder: "Your email" }
+                        })
+                    }}
+                    {#
+                    <div>
+                        <select class="form-control nice-select wide">
+                            <option value="" disabled selected>
+                                How many persons?
+                            </option>
+                            <option value="">2</option>
+                            <option value="">3</option>
+                            <option value="">4</option>
+                            <option value="">5</option>
+                        </select>
+                    </div>
+                    #}
+                    {{
+                        form_row(form.number_of_person, {
+                            attr: { placeholder: "How many persons?" }
+                        })
+                    }}
+                    <div class="d-flex justify-content-between">
+                        {{ form_row(form.date) }}
+                        {{ form_row(form.heure_debut) }}
+                        {{
+                            form_row(form.duration, {
+                                attr: { placeholder: "Durée?" }
+                            })
+                        }}
+                    </div>
+                    <div class="btn_box">
+                        <button class="mt-0" type="submit">Book Now</button>
+                    </div>
+                    {{ form_end(form) }}
                 </div>
             </div>
             <div class="col-md-6">

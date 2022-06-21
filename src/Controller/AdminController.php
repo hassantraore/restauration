@@ -248,6 +248,10 @@ class AdminController extends AbstractController
                 $return['totalExploitationProduct'] += $_value->getTotalPrice();
             }
         }
+        foreach ($report->getExploitationProduct() as $key => $_value) {
+            $return['totalExploitationProduct'] += $_value->getMount();
+        }
+
         $return['totalExploitationCharge'] = 0;
         foreach ($report->getExploitationCharge() as $key => $_value) {
             $return['totalExploitationCharge'] += $_value->getMount();

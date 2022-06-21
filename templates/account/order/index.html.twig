@@ -50,14 +50,55 @@
                     {% include "/account/order/modal.html.twig" %}
                     <a
                         class="btn btn-sm text-decoration-none btn-danger"
-                        href="{{
-                            path('app_account_order_delete', {
-                                id: order.id
-                            })
-                        }}"
+                        data-toggle="modal"
+                        href="javascript:void(0)"
+                        data-target="#delete-order-{{ order.id }}"
                     >
                         <i class="fa fa-trash"></i>
                     </a>
+                    <div
+                        class="modal fade"
+                        id="delete-order-{{ order.id }}"
+                        tabindex="-1"
+                        role="dialog"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                    >
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    Voulez-vous supprimez cette commande ?
+                                </div>
+                                <div class="modal-footer">
+                                    <a
+                                        class="btn"
+                                        style="
+                                            background-color: #222831;
+                                            color: white;
+                                            margin: 0px;
+                                        "
+                                        data-dismiss="modal"
+                                    >
+                                        Non
+                                    </a>
+                                    <a
+                                        href="{{
+                                            path('app_account_order_delete', {
+                                                id: order.id
+                                            })
+                                        }}"
+                                        class="btn"
+                                        style="
+                                            background-color: #ffbe33;
+                                            color: white;
+                                        "
+                                    >
+                                        Oui
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             {% else %}
