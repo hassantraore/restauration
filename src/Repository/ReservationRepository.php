@@ -39,6 +39,22 @@ class ReservationRepository extends ServiceEntityRepository
         }
     }
 
+    public function getReservationOfDate($date_debut, $date_fin)
+    {
+        $qb = $this->createQueryBuilder('e')
+
+        ->orWhere('e.date_debut BETWEEN :date_debut AND :date_fin')
+        ->orWhere('e.date_fin BETWEEN :date_debut AND :date_fin')
+        ->orWhere('e.date_debut <= :date_debut AND e.date_fin >= :date_fin')
+        ->setParameter('date_debut', $date_debut)
+        ->setParameter('date_fin', $date_fin)
+    ;
+
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
 //    /**
 //     * @return Reservation[] Returns an array of Reservation objects
 //     */

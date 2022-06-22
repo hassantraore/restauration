@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %} {% block main %}
+<section class="layout_padding">
+    <div
+        class="container"
+        style="border: solid 1px; border-radius: 12px; padding: 60px"
+    >
+        <h3 class="text-success text-center mb-3">
+            <i class="fas fa-check-circle mr-2"></i> Succeeded
+        </h3>
+        <div class="text-center">
+            <p class="">
+                <strong>Félicitations !</strong> Votre reservation a bien été
+                pris en compte.
+            </p>
+            <p>
+                Veuillez consultez votre boite mail pour voir la confirmation de
+                votre reservation .
+            </p>
+            <h4 class="mb-5">Merci pour votre confiance confiance !!!</h4>
+            <a
+                href="{{ path('app_home') }}"
+                class="btn"
+                style="background-color: #ffbe33"
+            >
+                Retour a l'accueil
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

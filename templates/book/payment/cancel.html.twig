@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %} {% block main %}
+<section class="layout_padding">
+    <div
+        class="container"
+        style="border: solid 1px; border-radius: 12px; padding: 60px"
+    >
+        <h3 class="text-danger text-center mb-3">
+            <i class="fas fa-ban mr-2"></i> Error
+        </h3>
+        <div class="text-center">
+            <p class="mb-5">
+                Ooops ! Une erreur est survenue lors de votre tentative de
+                paiment.
+            </p>
+            <a
+                href="{{ path('app_book') }}"
+                class="btn"
+                style="background-color: #ffbe33"
+            >
+                Reessayer
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

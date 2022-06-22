@@ -1,0 +1,29 @@
+<h3 class="text-center"><em>CONFIRMATION DE RESERVATION</em></h3>
+{% set reservation = app.session.get('reservation') %}
+<p>
+    Bonjour, 
+</p>
+<p>
+    Nous avons le plaisir de vous confirmer votre reservation dont les détails sont :
+    <br /><br />
+    <div>
+        <strong>Numéro de reservation :</strong>  {{reservation.id}}
+    </div>
+    <div>
+        <strong>Nom :</strong>  {{reservation.name}}
+    </div>
+    <div class="">
+        <strong>Nombre de personne :</strong> {{reservation.numberOfPerson}}
+    </div>
+    <div class="">
+        <strong>Date de debut :</strong> {{reservation.dateDebut|date("m/d/Y H:i:s")}}
+    </div>
+    <div class="">
+        <strong>Durée :</strong> {{reservation.duration}}
+    </div>
+    <div class="">
+        <strong>Tarif :</strong> {{reservation.price}} Dhs
+    </div>
+</p>
+
+<p>Vous remerciant par avance de l'intérêt que vous portez à notre établissement, nous nous réjouissons à l'avance de vous compter parmi nos hôtes.</p>

@@ -16,7 +16,7 @@ class AddressType extends AbstractType
         $builder
             ->add('address')
             ->add('complement')
-            ->add('phone', PhoneNumberType::class, ['default_region' => 'GB', 'format' => PhoneNumberFormat::NATIONAL])
+            ->add('phone', PhoneNumberType::class, ['default_region' => 'MA', 'format' => PhoneNumberFormat::NATIONAL])
         ;
     }
 

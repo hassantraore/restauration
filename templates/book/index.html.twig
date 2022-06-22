@@ -6,6 +6,15 @@
 <!-- book section -->
 <section class="book_section layout_padding">
     <div class="container">
+        <div class="mb-4">
+            <small>{{ form_errors(form) }}</small>
+            {{ form_errors(form.date_debut) }}
+            {{ form_errors(form.email) }}
+            {{ form_errors(form.phone_number) }}
+            {{ form_errors(form.name) }}
+            {{ form_errors(form.number_of_person) }}
+            {{ form_errors(form.duration) }}
+        </div>
         <div class="heading_container">
             <h2>Book A Table</h2>
         </div>
@@ -28,8 +37,25 @@
                         />
                     </div>
                     #}
-                    {{ form_row(form.name, {'attr':{placeholder:'Your Name'}})
-                    }} {#
+                    {{ form_widget(form.name, {'attr':{placeholder:'Your Name'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }}) }} {#
                     <div>
                         <input
                             type="text"
@@ -39,7 +65,7 @@
                     </div>
                     #}
                     {{
-                        form_row(form.phone_number, {
+                        form_widget(form.phone_number, {
                             attr: {
                                 placeholder: "Phone Number"
                             }
@@ -55,7 +81,7 @@
                     </div>
                     #}
                     {{
-                        form_row(form.email, {
+                        form_widget(form.email, {
                             attr: { placeholder: "Your email" }
                         })
                     }}
@@ -73,18 +99,21 @@
                     </div>
                     #}
                     {{
-                        form_row(form.number_of_person, {
+                        form_widget(form.number_of_person, {
                             attr: { placeholder: "How many persons?" }
                         })
                     }}
-                    <div class="d-flex justify-content-between">
-                        {{ form_row(form.date) }}
-                        {{ form_row(form.heure_debut) }}
-                        {{
-                            form_row(form.duration, {
-                                attr: { placeholder: "Durée?" }
-                            })
-                        }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            {{ form_widget(form.date_debut) }}
+                        </div>
+                        <div class="col-md-6">
+                            {{
+                                form_widget(form.duration, {
+                                    attr: { placeholder: "Durée?" }
+                                })
+                            }}
+                        </div>
                     </div>
                     <div class="btn_box">
                         <button class="mt-0" type="submit">Book Now</button>
