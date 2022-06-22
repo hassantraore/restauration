@@ -12,6 +12,7 @@ use App\Repository\IngredientRepository;
 use App\Repository\MonthRepository;
 use App\Repository\OrderRepository;
 use App\Repository\PlatRepository;
+use App\Repository\ReservationRepository;
 use App\Repository\YearRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,7 +30,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/dashboard', name: 'app_admin_dashboard', methods: ['GET'])]
-    public function dashboard(Request $request, MonthRepository $monthRepository, YearRepository $yearRepository, OrderRepository $orderRepository): Response
+    public function dashboard(Request $request, MonthRepository $monthRepository, YearRepository $yearRepository, OrderRepository $orderRepository, ReservationRepository $reservationRepository): Response
     {
         $data = new SearchData();
 
@@ -69,7 +70,7 @@ class AdminController extends AbstractController
         foreach ($report as $key => $value) {
             $month = $value->getMonth()->getLabel();
 
-            $total = $this->getReportsTotal($value, $orderRepository);
+            $total = $this->getReportsTotal($value, $orderRepository, $reservationRepository);
 
             //impot
             $result[$month]['impot'] = $value->getImpot();
@@ -202,7 +203,7 @@ class AdminController extends AbstractController
     }
 
     #[Route('/report', name: 'app_admin_report', methods: ['GET'])]
-    public function report(YearRepository $yearRepository, OrderRepository $orderRepository): Response
+    public function report(YearRepository $yearRepository, OrderRepository $orderRepository, ReservationRepository $reservationRepository): Response
     {
         $years = $yearRepository->findAll();
         $result = [];
@@ -211,7 +212,7 @@ class AdminController extends AbstractController
             $reports = $year->getReports();
             $result[$year_label] = [];
             foreach ($reports as $key => $report) {
-                $total = $this->getReportsTotal($report, $orderRepository);
+                $total = $this->getReportsTotal($report, $orderRepository, $reservationRepository);
 
                 $result[$year_label][] = [
                     'id' => $report->getId(),
@@ -223,6 +224,7 @@ class AdminController extends AbstractController
                     'totalNoCurrentProduct' => $total['totalNoCurrentProduct'],
                     'totalNoCurrentCharge' => $total['totalNoCurrentCharge'],
                     'exploitationResult' => $total['resultExploitation'],
+                    'totalReservation' => $total['totalReservation'],
                     'financialResult' => $total['resultFinancial'],
                     'currentResult' => $total['resultCurrent'],
                     'noCurrentResult' => $total['resultNoCurrent'],
@@ -241,14 +243,29 @@ class AdminController extends AbstractController
         ]);
     }
 
-    public function getReportsTotal(Report $report, OrderRepository $orderRepository)
+    #[Route('/reservation', name: 'app_admin_reservation', methods: ['GET'])]
+    public function reservation(ReservationRepository $reservationRepository): Response
+    {
+        return $this->render('admin/reservation/index.html.twig', [
+            'reservations' => $reservationRepository->findBy([], [
+                'date_debut' => 'DESC',
+            ]),
+        ]);
+    }
+
+    public function getReportsTotal(Report $report, OrderRepository $orderRepository, ReservationRepository $reservationRepository)
     {
         $return = [];
 
         $mois = $report->getMonth()->getId();
         $annee = $report->getYear()->getLabel();
+
         $order = $orderRepository->getExploitationProducts($mois, $annee);
         $return['totalOrder'] = 0;
+
+        $reservation = $reservationRepository->getExploitationProducts($mois, $annee);
+        $return['totalReservation'] = 0;
+        //dd($reservation);
 
         //exploitation
         $return['totalExploitationProduct'] = 0;
@@ -257,6 +274,10 @@ class AdminController extends AbstractController
                 $return['totalOrder'] += $_value->getTotalPrice();
                 $return['totalExploitationProduct'] += $_value->getTotalPrice();
             }
+        }
+        foreach ($reservation as $key => $_value) {
+            $return['totalReservation'] += $_value->getPrice();
+            $return['totalExploitationProduct'] += $_value->getPrice();
         }
         foreach ($report->getExploitationProduct() as $key => $_value) {
             $return['totalExploitationProduct'] += $_value->getMount();

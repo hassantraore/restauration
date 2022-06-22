@@ -61,7 +61,9 @@
                                         </tr>
                                         <tr>
                                             <td>Reservation</td>
-                                            <td>0</td>
+                                            <td>
+                                                {{ report.totalReservation }}
+                                            </td>
                                         </tr>
                                         {% for row in
                                         report.cpc.exploitationProduct %}
@@ -294,7 +296,7 @@
                     </h5>
                     <hr />
                     <h5 class="text-center">
-                        <strong>Impot</strong> : {{ report.impot }}
+                        <strong>Impot</strong> : {{ report.impot }} Dhs
                     </h5>
                     <hr />
                     <h5 class="text-center">

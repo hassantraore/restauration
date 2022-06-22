@@ -1,0 +1,70 @@
+{% extends './admin/index.html.twig' %} {% block content %}
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-5 border-bottom"
+>
+    <h1 class="h2">Reservations</h1>
+</div>
+<div class="table-responsive">
+    <h5>Total : {{ reservations | length }}</h5>
+    <br />
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Number of person</th>
+                <th>Date de debut</th>
+                <th>Durée</th>
+                <th>Date de fin</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.id }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.name }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.email }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.phoneNumber | phone_number_format('NATIONAL') }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.numberOfPerson }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{
+                        reservation.dateDebut|date('Y-m-d H:i:s')
+                    }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">{{ reservation.duration }} h</td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{
+                        reservation.dateFin|date('Y-m-d H:i:s')
+                    }}
+                </td>
+                <td class="{{"now"|date("Y-m-d H:i:s") >= reservation.dateDebut|date('Y-m-d H:i:s') ? 'bg-danger text-white' : ''}}">
+                    {{ reservation.price }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9">
+                    <span class="text-muted"
+                        >Vous n'avez aucune reservation enregistré .</span
+                    >
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

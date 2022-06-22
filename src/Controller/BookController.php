@@ -56,7 +56,7 @@ class BookController extends AbstractController
                     $plage_horaire[] = $debut.' - '.$fin;
                     $nb_table += $value->getNumberOfTable();
                 }
-                if (($nb_table + $number_of_table) > 3) {
+                if (($nb_table + $number_of_table) > 30) {
                     $error = true;
                     $message = "Il n'y a pas de place disponible entre : ";
                     $message .= implode(' et ', $plage_horaire);

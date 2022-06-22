@@ -84,7 +84,18 @@
                     Ingredients
                 </a>
             </li>
+            <li class="nav-item">
+                <a
+                    class="nav-link {{
+                        set_active_route(path('app_admin_reservation'))
+                    }}"
+                    href="{{ path('app_admin_reservation') }}"
+                >
+                    <i class="fas fa-calendar-check mr-2"></i>
 
+                    Reservation
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <i class="fa fa-users mr-2"></i>

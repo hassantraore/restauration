@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reservation;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -50,6 +51,22 @@ class ReservationRepository extends ServiceEntityRepository
         ->setParameter('date_fin', $date_fin)
     ;
 
+        $result = $qb->getQuery()->getResult();
+
+        return $result;
+    }
+
+    public function getExploitationProducts($mois, $annee)
+    {
+        $date_debut = date('d-m-Y', mktime(0, 0, 0, $mois, 1, $annee));
+        $date_debut = new DateTime($date_debut);
+        $date_fin = date('d-m-Y', mktime(0, 0, 0, $mois + 1, 0, $annee));
+        $date_fin = new DateTime($date_fin);
+        $qb = $this->createQueryBuilder('e')
+        ->andWhere('e.date_debut BETWEEN :from AND :to')
+        ->setParameter('from', $date_debut)
+        ->setParameter('to', $date_fin)
+    ;
         $result = $qb->getQuery()->getResult();
 
         return $result;

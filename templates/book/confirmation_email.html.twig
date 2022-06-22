@@ -7,16 +7,13 @@
     Nous avons le plaisir de vous confirmer votre reservation dont les détails sont :
     <br /><br />
     <div>
-        <strong>Numéro de reservation :</strong>  {{reservation.id}}
-    </div>
-    <div>
         <strong>Nom :</strong>  {{reservation.name}}
     </div>
     <div class="">
         <strong>Nombre de personne :</strong> {{reservation.numberOfPerson}}
     </div>
     <div class="">
-        <strong>Date de debut :</strong> {{reservation.dateDebut|date("m/d/Y H:i:s")}}
+        <strong>Date :</strong> {{reservation.dateDebut|date("m/d/Y H:i:s")}}
     </div>
     <div class="">
         <strong>Durée :</strong> {{reservation.duration}}
