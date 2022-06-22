@@ -19,10 +19,12 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Categorie</th>
-                <th>Price</th>
-                <th>Size</th>
+                <th>Prix minimum</th>
+                <th>Status</th>
                 <th>Promo</th>
+                {#
                 <th>Sauce</th>
+                #}
                 <th>Image</th>
                 <th></th>
             </tr>
@@ -38,16 +40,7 @@
                 <td>{{ product.category.name }}</td>
                 <td>{{ product.price }} Dhs</td>
                 <td>
-                    <div class="custom-control custom-switch">
-                        <input type="checkbox"
-                        {{ product.size ? "checked" : "" }}
-                        class="custom-control-input" disabled
-                        id="customSwitch1">
-                        <label
-                            class="custom-control-label"
-                            for="customSwitch1"
-                        ></label>
-                    </div>
+                    {{ product.isAvailable ? "Disponible" : "Indisponible" }}
                 </td>
                 <td>
                     <div class="custom-control custom-switch">
@@ -61,6 +54,7 @@
                         ></label>
                     </div>
                 </td>
+                {#
                 <td>
                     <div class="custom-control custom-switch">
                         <input type="checkbox"
@@ -73,6 +67,7 @@
                         ></label>
                     </div>
                 </td>
+                #}
                 <td>
                     <img
                         src="{{vich_uploader_asset(product) | imagine_filter('squared_thumbnail_small')}}"
@@ -83,16 +78,17 @@
                     <div class="d-flex">
                         <div class="mr-2">
                             <a
-                                class="btn btn-sm btn-success"
-                                href="{{
-                                    path('app_product_show', { id: product.id })
-                                }}"
+                                data-toggle="modal"
+                                data-target="#admin-plat-{{ product.id }}"
+                                class="btn btn-sm btn-primary"
+                                href="javascript:void(0)"
                                 ><i class="fa fa-eye"></i
                             ></a>
+                            {% include "admin/plats/modal.html.twig" %}
                         </div>
                         <div class="mr-2">
                             <a
-                                class="btn btn-sm btn-primary"
+                                class="btn btn-sm btn-warning"
                                 href="{{
                                     path('app_product_edit', { id: product.id })
                                 }}"
@@ -111,7 +107,7 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="9">no records found</td>
             </tr>
             {% endfor %}
         </tbody>

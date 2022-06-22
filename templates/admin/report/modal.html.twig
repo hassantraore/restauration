@@ -1,0 +1,307 @@
+<div
+    class="modal fade bd-example-modal-lg"
+    id="admin-report-{{ report.id }}"
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="{{ report.id }}-admin-plat"
+    aria-hidden="true"
+    data-backdrop="static"
+>
+    <!-- content -->
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content text-dark">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <a
+                        class="text-decoration-none text-dark pointer"
+                        data-dismiss="modal"
+                        style="background-color: white"
+                    >
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="main-content p-3">
+                    <h4 class="text-center mb-4" style="font-weight: 900">
+                        Report No {{ report.id }}
+                    </h4>
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="">
+                                <strong>Année:</strong>
+                                {{ report.cpc.year.label }}
+                            </div>
+                            <div class="">
+                                <strong>Mois:</strong>
+                                {{ report.cpc.month.label }}
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="text-center mb-4">
+                        Produits / Charges d'exploitation
+                    </h5>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Produits d'exploitation
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Commande</td>
+                                            <td>{{ report.totalOrder }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reservation</td>
+                                            <td>0</td>
+                                        </tr>
+                                        {% for row in
+                                        report.cpc.exploitationProduct %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalExploitationProduct
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Charges d'exploitation
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in
+                                        report.cpc.exploitationCharge %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalExploitationCharge
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="mb-5">
+                        <strong>Resultat d'exploitation :</strong>
+                        {{ report.exploitationResult }} Dhs
+                    </h5>
+                    <h5 class="text-center mb-4">
+                        Produits / Charges financiers
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Produits financiers
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in
+                                        report.cpc.financialProduct %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalFinancialProduct
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Charges financieres
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in report.cpc.financialCharge
+                                        %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalFinancialCharge
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="mb-5">
+                        <strong>Resultat financiers :</strong>
+                        {{ report.financialResult }} Dhs
+                    </h5>
+                    <hr />
+                    <h5 class="text-center">
+                        <strong>Resultat courant :</strong>
+                        {{ report.currentResult }} Dhs
+                    </h5>
+                    <hr />
+                    <h5 class="text-center mb-4 mt-5">
+                        Produits / Charges non courants
+                    </h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Produits non courant
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in
+                                        report.cpc.noCurrentProduct %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalNoCurrentProduct
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-default">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2">
+                                                Charges non courantes
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th style="width: 70%">Label</th>
+                                            <th>Montant</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for row in report.cpc.noCurrentCharge
+                                        %}
+                                        <tr>
+                                            <td>{{ row.label }}</td>
+                                            <td>{{ row.mount }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <th>Total</th>
+                                            <td>
+                                                {{
+                                                    report.totalNoCurrentCharge
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="mb-5">
+                        <strong>Resultat non courant :</strong>
+                        {{ report.noCurrentResult }} Dhs
+                    </h5>
+                    <hr />
+                    <h5 class="text-center">
+                        <strong>Resultat avant impot :</strong>
+                        {{ report.resultBeforeImpot }} Dhs
+                    </h5>
+                    <hr />
+                    <h5 class="text-center">
+                        <strong>Impot</strong> : {{ report.impot }}
+                    </h5>
+                    <hr />
+                    <h5 class="text-center">
+                        <strong>Resultat net</strong> : {{ report.resultNet }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

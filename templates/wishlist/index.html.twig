@@ -69,14 +69,23 @@ main %}
                                         {{ product.item.price }} Dhs
                                     </td>
                                     <td width="15%">
-                                        <span class="in-stock-box bg-success"
-                                            >Disponible</span
+                                        <span
+                                            class="in-stock-box bg-{{
+                                                product.item.isAvailable
+                                                    ? 'success'
+                                                    : 'danger'
+                                            }}"
+                                            >{{
+                                                product.item.isAvailable
+                                                    ? "Disponible"
+                                                    : "Indisponible"
+                                            }}</span
                                         >
                                     </td>
                                     <td width="15%">
-                                        {% if product.item.sauce or
-                                        (product.item.size and
-                                        product.item.size|length > 1) %}
+                                        {% if product.item.isAvailable %} {% if
+                                        product.item.sauce or (product.item.size
+                                        and product.item.size|length > 1) %}
                                         <button
                                             data-toggle="modal"
                                             data-target="#wishModal{{
@@ -114,7 +123,7 @@ main %}
                                         >
                                             Add to Cart
                                         </button>
-                                        {% endif %} {% endif %}
+                                        {% endif %} {% endif %}{% endif %}
                                     </td>
                                     <td width="10%" class="text-center">
                                         <a

@@ -18,6 +18,7 @@ require("jquery-nice-select");
 require("owl.carousel");
 require("bootstrap");
 require("./js/custom");
+require("./js/order");
 require("./js/cart");
 require("./js/checkout");
 require("./js/wishlist");

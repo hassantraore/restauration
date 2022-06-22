@@ -216,13 +216,21 @@ class AdminController extends AbstractController
                 $result[$year_label][] = [
                     'id' => $report->getId(),
                     'month' => $report->getMonth(),
+                    'totalExploitationProduct' => $total['totalExploitationProduct'],
+                    'totalExploitationCharge' => $total['totalExploitationCharge'],
+                    'totalFinancialProduct' => $total['totalFinancialProduct'],
+                    'totalFinancialCharge' => $total['totalFinancialCharge'],
+                    'totalNoCurrentProduct' => $total['totalNoCurrentProduct'],
+                    'totalNoCurrentCharge' => $total['totalNoCurrentCharge'],
                     'exploitationResult' => $total['resultExploitation'],
                     'financialResult' => $total['resultFinancial'],
                     'currentResult' => $total['resultCurrent'],
                     'noCurrentResult' => $total['resultNoCurrent'],
                     'resultBeforeImpot' => $total['resultBeforeImpot'],
+                    'totalOrder' => $total['totalOrder'],
                     'impot' => $report->getImpot(),
                     'resultNet' => $total['resultNet'],
+                    'cpc' => $report,
                 ];
             }
         }
@@ -240,11 +248,13 @@ class AdminController extends AbstractController
         $mois = $report->getMonth()->getId();
         $annee = $report->getYear()->getLabel();
         $order = $orderRepository->getExploitationProducts($mois, $annee);
+        $return['totalOrder'] = 0;
 
         //exploitation
         $return['totalExploitationProduct'] = 0;
         foreach ($order as $key => $_value) {
             if ($_value->getIsPaid()) {
+                $return['totalOrder'] += $_value->getTotalPrice();
                 $return['totalExploitationProduct'] += $_value->getTotalPrice();
             }
         }

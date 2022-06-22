@@ -57,6 +57,9 @@ class Plat
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: 'plats')]
     private $ingredient;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isAvailable = 1;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
@@ -280,6 +283,18 @@ class Plat
     public function removeIngredient(Ingredient $ingredient): self
     {
         $this->ingredient->removeElement($ingredient);
+
+        return $this;
+    }
+
+    public function isIsAvailable(): ?bool
+    {
+        return $this->isAvailable;
+    }
+
+    public function setIsAvailable(bool $isAvailable): self
+    {
+        $this->isAvailable = $isAvailable;
 
         return $this;
     }

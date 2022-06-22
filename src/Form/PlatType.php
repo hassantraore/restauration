@@ -46,6 +46,7 @@ class PlatType extends AbstractType
                 'by_reference' => false,
                 'label' => false,
             ])
+            ->add('isAvailable')
             ->add('promotion')
             ->add('ingredient', EntityType::class, [
                 // looks for choices from this entity

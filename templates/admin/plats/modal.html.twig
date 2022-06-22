@@ -1,0 +1,103 @@
+<div
+    class="modal fade bd-example-modal-lg"
+    id="admin-plat-{{ product.id }}"
+    role="dialog"
+    tabindex="-1"
+    aria-labelledby="{{ product.id }}-admin-plat"
+    aria-hidden="true"
+    data-backdrop="static"
+>
+    <!-- content -->
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content text-dark">
+            <div class="modal-body">
+                <div class="d-flex justify-content-end mb-3">
+                    <a
+                        class="text-decoration-none text-dark pointer"
+                        data-dismiss="modal"
+                        style="background-color: white"
+                    >
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+                <div class="main-content p-3">
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-center">
+                            <img
+                                src="{{ vich_uploader_asset(product) | imagine_filter('squared_thumbnail_medium') }}"
+                                alt="Image"
+                                class="img-fluid"
+                            />
+                            {% if product.promotion %}
+                            <span
+                                class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-pink text-uppercase"
+                                >Promo</span
+                            >
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-center">
+                            <h5>{{ product.name }}</h5>
+                            <p>
+                                <span
+                                    class="badge badge-{{
+                                        product.isAvailable
+                                            ? 'success'
+                                            : 'danger'
+                                    }}"
+                                >
+                                    {% if product.isAvailable %} Disponible {%
+                                    else %} Indisponible {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <h5 style="font-weight: 900">Categorie</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>{{ product.category.name }}</p>
+                        </div>
+                    </div>
+                    <h5 style="font-weight: 900">Description</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>{{ product.description }}</p>
+                        </div>
+                    </div>
+                    <h5 style="font-weight: 900">Ingredients</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p>
+                                {% for row in product.ingredient %}
+                                <span
+                                    class="badge badge-pill badge-secondary"
+                                    >{{ row.name }}</span
+                                >
+                                {% endfor %}
+                            </p>
+                        </div>
+                    </div>
+                    <h5 style="font-weight: 900">Taille</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for row in product.size %}
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span>{{ row.sizeName }}</span>
+                                </div>
+                                <div class="col-md-4" style="font-weight: 900">
+                                    {{ row.newPrice }} Dhs {% if row.oldPrice %}
+                                    <strike>{{ row.oldPrice }} Dhs</strike>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

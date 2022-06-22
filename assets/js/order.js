@@ -7,7 +7,16 @@ function changeStatus(id) {
     $.ajax({
         url: "/account/order/status/" + id + "/" + value,
         method: "POST",
-    }).then((response) => {});
+    }).then((response) => {
+        if (value == "En cours") {
+            document.getElementById(id + "-admin-order-status").innerHTML =
+                "En cours";
+        } else {
+            document.getElementById(id + "-admin-order-status").innerHTML =
+                "Livrée";
+        }
+        //addFlash(response.message[0], response.message[1]);
+    });
 }
 function changePayment(id) {
     let ele = document.getElementsByName(id + "-admin-order-paiement");
@@ -22,7 +31,19 @@ function changePayment(id) {
         url: "/account/order/payment/" + id + "/" + value,
         method: "POST",
     }).then((response) => {
-        /* setQuantity(response.items, response.totalArticle, response.totalPrice); */
+        if (value) {
+            document.getElementById(id + "-admin-order-payment").innerHTML =
+                "Payé";
+            $("#" + id + "-admin-order-payment").removeClass("badge-danger");
+            $("#" + id + "-admin-order-payment").addClass("badge-success");
+        } else {
+            document.getElementById(id + "-admin-order-payment").innerHTML =
+                "Non payé";
+            $("#" + id + "-admin-order-payment").removeClass("badge-success");
+            $("#" + id + "-admin-order-payment").addClass("badge-danger");
+        }
+
+        //addFlash(response.message[0], response.message[1]);
     });
 }
 
