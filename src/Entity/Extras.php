@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ExtrasRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -103,33 +102,6 @@ class Extras
     public function getImageFile()
     {
         return $this->imageFile;
-    }
-
-    /**
-     * @return Collection<int, Plat>
-     */
-    public function getPlats(): Collection
-    {
-        return $this->plats;
-    }
-
-    public function addPlat(Plat $plat): self
-    {
-        if (!$this->plats->contains($plat)) {
-            $this->plats[] = $plat;
-            $plat->addExtra($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlat(Plat $plat): self
-    {
-        if ($this->plats->removeElement($plat)) {
-            $plat->removeExtra($this);
-        }
-
-        return $this;
     }
 
     public function toArray()

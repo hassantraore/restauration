@@ -43,7 +43,7 @@ class WishlistService
         $this->session->getSession()->set('wishlist', $wishlist);
         $this->session->getSession()->set('totalWish', $this->getTotalWish());
         if ($this->security->getUser()) {
-            $this->updateWishlist();
+            $this->updateWishlist($wishlist);
         }
     }
 
@@ -58,7 +58,7 @@ class WishlistService
         $this->session->getSession()->set('wishlist', $wishlist);
         $this->session->getSession()->set('totalWish', $this->getTotalWish());
         if ($this->security->getUser()) {
-            $this->updateWishlist();
+            $this->updateWishlist($wishlist);
         }
     }
 
@@ -99,36 +99,39 @@ class WishlistService
         return count($wishlist);
     }
 
-    public function updateWishlist(): array
+    public function updateWishlist($wishlist = null): array
     {
         $userWhish = $this->wishlistRepository->findOneBy([
             'user' => $this->security->getUser(),
         ]);
+        if ($wishlist == null) {
+            $sessionWishlist = $this->session->getSession()->get('wishlist', []);
 
-        $sessionWishlist = $this->session->getSession()->get('wishlist', []);
-
-        if ($userWhish) {
-            $wishlist = $userWhish->getItem() ? $userWhish->getItem() : [];
-        } else {
-            $wishlist = [];
-        }
-
-        if (!empty($sessionWishlist)) {
-            if (!empty($wishlist)) {
-                foreach ($sessionWishlist as $id => $type) {
-                    if (empty($wishlist[$id])) {
-                        $wishlist[$id] = $type;
-                    }
-                }
+            if ($userWhish) {
+                $wishlist = $userWhish->getItem() ? $userWhish->getItem() : [];
             } else {
-                $wishlist = $sessionWishlist;
+                $wishlist = [];
             }
-        }
 
-        if (!$userWhish) {
-            $userWhish = new Wishlist();
-            $userWhish->setUser($this->security->getUser());
-            $userWhish->setItem($wishlist);
+            if (!empty($sessionWishlist)) {
+                if (!empty($wishlist)) {
+                    foreach ($sessionWishlist as $id => $type) {
+                        if (empty($wishlist[$id])) {
+                            $wishlist[$id] = $type;
+                        }
+                    }
+                } else {
+                    $wishlist = $sessionWishlist;
+                }
+            }
+
+            if (!$userWhish) {
+                $userWhish = new Wishlist();
+                $userWhish->setUser($this->security->getUser());
+                $userWhish->setItem($wishlist);
+            } else {
+                $userWhish->setItem($wishlist);
+            }
         } else {
             $userWhish->setItem($wishlist);
         }

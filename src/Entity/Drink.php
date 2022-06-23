@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\DrinkRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,9 +40,6 @@ class Drink
      */
     private $imageFile;
 
-    #[ORM\ManyToMany(targetEntity: Plat::class, mappedBy: 'drink')]
-    private $plats;
-
     public function __construct()
     {
         $this->plats = new ArrayCollection();
@@ -70,7 +66,7 @@ class Drink
     {
         $exist = false;
         foreach ($this->size as $tag) {
-            if ($tag->getName() == $_size->getName()) {
+            if ($tag->getName() == $_size->getSizeName()) {
                 $exist = true;
                 break;
             }
@@ -84,7 +80,7 @@ class Drink
     {
         $tmp1 = [];
         foreach ($this->size as $size) {
-            if ($size->getName() !== $delete_size->getName()) {
+            if ($size->getName() !== $delete_size->getSizeName()) {
                 $tmp1[] = $size;
             }
         }
@@ -143,33 +139,6 @@ class Drink
     public function getImageFile()
     {
         return $this->imageFile;
-    }
-
-    /**
-     * @return Collection<int, Plat>
-     */
-    public function getPlats(): Collection
-    {
-        return $this->plats;
-    }
-
-    public function addPlat(Plat $plat): self
-    {
-        if (!$this->plats->contains($plat)) {
-            $this->plats[] = $plat;
-            $plat->addDrink($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlat(Plat $plat): self
-    {
-        if ($this->plats->removeElement($plat)) {
-            $plat->removeDrink($this);
-        }
-
-        return $this;
     }
 
     public function toArray()
