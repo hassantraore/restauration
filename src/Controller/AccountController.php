@@ -6,9 +6,12 @@ use App\Data\UserData;
 use App\Form\UserType;
 use App\Repository\AddressRepository;
 use App\Repository\OrderRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/account')]
@@ -37,7 +40,7 @@ class AccountController extends AbstractController
     }
 
     #[Route('/information', name: 'app_account_information')]
-    public function information(HttpFoundationRequest $request): Response
+    public function information(HttpFoundationRequest $request, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
     {
         $information = new UserData();
         $information->firstname = $this->getUser()->getFirstName();
@@ -46,7 +49,31 @@ class AccountController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($information);
+            $firstname = $form->get('firstname')->getData();
+            $lastname = $form->get('lastname')->getData();
+            $old_password = $form->get('old_password')->getData();
+            $new_password = $form->get('new_password')->getData();
+            $this->getUser()->setFirstName($firstname);
+            $this->getUser()->setLastName($lastname);
+            $same = password_verify($old_password, $this->getUser()->getPassword());
+            $error = false;
+
+            if ($new_password) {
+                if ($old_password && $same) {
+                    $new_password = $userPasswordHasherInterface->hashPassword($this->getUser(), $new_password);
+                    $this->getUser()->setPassword($new_password);
+                } else {
+                    $error = true;
+                    $form->addError(new FormError('Ancien mot de passe incorrect'));
+                }
+            }
+
+            if (!$error) {
+                $userRepository->add($this->getUser());
+                $this->addFlash('success', 'Les informations ont bien été mis à jour');
+
+                return $this->redirectToRoute('app_account_information');
+            }
         }
 
         return $this->renderForm('account/information/index.html.twig', [

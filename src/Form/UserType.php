@@ -28,11 +28,8 @@ class UserType extends AbstractType
                     new NotBlank(),
                 ],
             ])
-            ->add('old_password', null, [
+            ->add('old_password', PasswordType::class, [
                 'required' => true,
-                'constraints' => [
-                    new NotBlank(),
-                ],
             ])
             ->add('new_password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -41,9 +38,6 @@ class UserType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
-                'constraints' => [
-                        new NotBlank(),
-                    ],
             ])
         ;
     }

@@ -1,4 +1,9 @@
-{% extends "/account/index.html.twig" %} {% block content %}
+{% extends "/account/index.html.twig" %} {% block content %} {% for label,
+messages in app.flashes %} {% for message in messages %}
+<div class="alert alert-{{ label }} text-center" role="alert">
+    {{ message }}
+</div>
+{% endfor %}{% endfor %}
 {{
     form_start(form, {
         attr: {
@@ -12,9 +17,4 @@
     {{ button_label|default('Save') }}
 </button>
 {{ form_end(form) }}
-<a
-    class="btn btn-lg btn-block btn-dark mt-2"
-    href="{{ path('app_account_address') }}"
-    >retour</a
->
 {% endblock %}
