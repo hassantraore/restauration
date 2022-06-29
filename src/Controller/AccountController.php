@@ -25,6 +25,22 @@ class AccountController extends AbstractController
         ]);
     }
 
+    #[Route('/fidelite', name: 'app_account_fidelite')]
+    public function fidelite(): Response
+    {
+        return $this->render('account/fidelite/index.html.twig', [
+            'controller_name' => 'AccountController',
+        ]);
+    }
+
+    #[Route('/information', name: 'app_account_information')]
+    public function information(): Response
+    {
+        return $this->render('account/information/index.html.twig', [
+            'controller_name' => 'AccountController',
+        ]);
+    }
+
     #[Route('/address', name: 'app_account_address', methods: ['GET'])]
     public function address(AddressRepository $addressRepository): Response
     {

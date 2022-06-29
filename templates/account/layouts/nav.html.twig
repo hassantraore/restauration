@@ -19,10 +19,11 @@
         <span class="font-weight-bold small text-uppercase">Dashboard</span></a
     >
     <a
-        class="nav-link mb-3 p-3 shadow"
+        class="nav-link mb-3 p-3 shadow {{
+            set_active_route(path('app_account_information'))
+        }}"
         id="v-pills-home-tab"
-        data-toggle="pill"
-        href="#v-pills-home"
+        href="{{ path('app_account_information') }}"
         role="tab"
         aria-controls="v-pills-home"
         aria-selected="true"
@@ -62,6 +63,21 @@
         <i class="fa fa-star mr-2"></i>
         <span class="font-weight-bold small text-uppercase"
             >Mes Adresses</span
+        ></a
+    >
+    <a
+        class="nav-link mb-3 p-3 {{
+            set_active_route(path('app_account_fidelite'))
+        }} shadow"
+        id="v-pills-Adresses-tab"
+        href="{{ path('app_account_fidelite') }}"
+        role="tab"
+        aria-controls="v-pills-Adresses"
+        aria-selected="false"
+    >
+        <i class="fas fa-money-check-alt mr-2"></i>
+        <span class="font-weight-bold small text-uppercase"
+            >Credit de fidelite</span
         ></a
     >
 
