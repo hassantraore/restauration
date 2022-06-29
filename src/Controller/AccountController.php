@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Data\UserData;
+use App\Form\UserType;
 use App\Repository\AddressRepository;
 use App\Repository\OrderRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -34,10 +37,20 @@ class AccountController extends AbstractController
     }
 
     #[Route('/information', name: 'app_account_information')]
-    public function information(): Response
+    public function information(HttpFoundationRequest $request): Response
     {
-        return $this->render('account/information/index.html.twig', [
-            'controller_name' => 'AccountController',
+        $information = new UserData();
+        $information->firstname = $this->getUser()->getFirstName();
+        $information->lastname = $this->getUser()->getLastName();
+        $form = $this->createForm(UserType::class, $information);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            dd($information);
+        }
+
+        return $this->renderForm('account/information/index.html.twig', [
+            'form' => $form,
         ]);
     }
 

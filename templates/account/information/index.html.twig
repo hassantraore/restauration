@@ -1,11 +1,20 @@
 {% extends "/account/index.html.twig" %} {% block content %}
-<h4 class="font-italic mb-4">Personal information</h4>
-<p class="font-italic text-muted mb-2">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-    non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
+{{
+    form_start(form, {
+        attr: {
+            novalidate: "novalidate",
+            id: "addressForm"
+        }
+    })
+}}
+{{ form_widget(form) }}
+<button class="btn btn-lg btn-block" style="background-color: #ffbe33">
+    {{ button_label|default('Save') }}
+</button>
+{{ form_end(form) }}
+<a
+    class="btn btn-lg btn-block btn-dark mt-2"
+    href="{{ path('app_account_address') }}"
+    >retour</a
+>
 {% endblock %}
